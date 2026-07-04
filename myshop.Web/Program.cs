@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
-using myshop.DataAccess;
-using myshop.Entities.Models;
+using DataAccess.Models;
+using BusinessLogic.Data;
 using Stripe;
 using System;
 

@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using myshop.DataAccess;
-using myshop.Entities.Models;
+using BusinessLogic.Data;
+using DataAccess.Models;
 using myshop.Entities.ViewModels;
 
 namespace myshop.Web.Areas.Admin.Controllers

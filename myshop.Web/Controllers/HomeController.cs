@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using myshop.Entities.Models;
+using BusinessLogic.Data;
+using DataAccess.Models;
 using System.Diagnostics;
 
 namespace myshop.Web.Controllers
