@@ -5,17 +5,21 @@ using Microsoft.Extensions.Hosting;
 using BusinessLogic.Data;
 using DataAccess.Models;
 using myshop.Entities.ViewModels;
+using BusinessLogic.BL;
 
 namespace myshop.Web.Areas.Admin.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        // private readonly ApplicationDbContext _context;
+        private readonly ProductManagement _productManagement;
+        private readonly CategoryManagement _categoryManagement;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public ProductController(ProductManagement productManagement, CategoryManagement categoryManagement, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
+            _productManagement = productManagement;
+            _categoryManagement = categoryManagement;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -27,18 +31,9 @@ namespace myshop.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetData()
         {
-            var products = _context.Products
-                .Include(x => x.Category)
-                .Select(x => new
-                {
-                    id = x.Id,
-                    name = x.Name,
-                    description = x.Description,
-                    price = x.Price,
-                    categoryName = x.Category.Name
-                })
-                .ToList();
+            var products = _productManagement.GetProducts().ToList();
 
+            //?? What does this return type does ????
             return Json(new { data = products });
         }
 
@@ -48,17 +43,17 @@ namespace myshop.Web.Areas.Admin.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategoryList = _context.Categories.Select(x => new SelectListItem
+                CategoryList = _categoryManagement.GetCategoriesLookUp().Select(x => new SelectListItem
                 {
-                    Text = x.Name,
-                    Value = x.Id.ToString()
+                    Value = x.Id.ToString(),
+                    Text = x.Name
                 })
             };
             return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM,IFormFile file)
+        public IActionResult Create(ProductVM productVM, IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -69,19 +64,27 @@ namespace myshop.Web.Areas.Admin.Controllers
                     var Upload = Path.Combine(RootPath, @"Images\Products");
                     var ext = Path.GetExtension(file.FileName);
 
-                    using (var filestream = new FileStream(Path.Combine(Upload,filename+ext),FileMode.Create))
+                    using (var filestream = new FileStream(Path.Combine(Upload, filename + ext), FileMode.Create))
                     {
                         file.CopyTo(filestream);
                     }
                     productVM.Product.Img = @"Images\Products\" + filename + ext;
                 }
 
-                _context.Products.Add(productVM.Product);
-                _context.SaveChanges();
-                TempData["Create"] = "Item has Created Successfully";
-                return RedirectToAction("Index");
+                bool isAdded = _productManagement.UpsertProduct(productVM.Product);
+                if (isAdded)
+                {
+                    TempData["Create"] = "Item has Created Successfully";
+                    return RedirectToAction("Index");
+                }
             }
-            return View(productVM.Product);
+            // إصلاح الخطأ: إعادة تعبئة القائمة وإرجاع الـ productVM بالكامل وليس الـ Product فقط
+            productVM.CategoryList = _categoryManagement.GetCategoriesLookUp().Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name
+            });
+            return View(productVM);
         }
         [HttpGet]
         public IActionResult Edit(int? id)
@@ -93,8 +96,8 @@ namespace myshop.Web.Areas.Admin.Controllers
 
             ProductVM productVM = new ProductVM()
             {
-                Product = _context.Products.FirstOrDefault(x => x.Id == id),
-                CategoryList = _context.Categories.Select(x => new SelectListItem
+                Product = _productManagement.GetProductById(id),
+                CategoryList = _categoryManagement.GetCategoriesLookUp().Select(x => new SelectListItem
                 {
                     Text = x.Name,
                     Value = x.Id.ToString()
@@ -103,7 +106,7 @@ namespace myshop.Web.Areas.Admin.Controllers
 
             return View(productVM);
         }
-        
+
         [HttpPost]
         public IActionResult Edit(ProductVM productVM, IFormFile? file)
         {
@@ -135,27 +138,29 @@ namespace myshop.Web.Areas.Admin.Controllers
                     productVM.Product.Img = @"Images\Products\" + filename + ext;
                 }
 
-                _context.Products.Update(productVM.Product);
-                _context.SaveChanges();
-
-                TempData["Update"] = "Data has Updated Successfully";
-                return RedirectToAction("Index");
+                bool isUpdated = _productManagement.UpsertProduct(productVM.Product);
+                if (isUpdated)
+                {
+                    TempData["Update"] = "Data has Updated Successfully";
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(productVM.Product);
         }
-        
+
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            var productIndb = _context.Products.FirstOrDefault(x => x.Id == id);
+            var productIndb = _productManagement.GetProductById(id);
 
             if (productIndb == null)
             {
                 return Json(new { success = false, message = "Error while Deleting" });
             }
 
-            _context.Products.Remove(productIndb);
+            //! NOT FINISHED
+            bool isDeleted = _productManagement.DeleteProduct(productIndb);
 
             var oldimg = Path.Combine(_webHostEnvironment.WebRootPath, productIndb.Img.TrimStart('\\'));
 
@@ -164,7 +169,7 @@ namespace myshop.Web.Areas.Admin.Controllers
                 System.IO.File.Delete(oldimg);
             }
 
-            _context.SaveChanges();
+            // _context.SaveChanges();
 
             return Json(new { success = true, message = "file has been Deleted" });
         }

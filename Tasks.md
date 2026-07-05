@@ -52,7 +52,7 @@ Refactor the project into a maintainable layered architecture by separating resp
 
 ## ✅ Requirements
 
-### Solution Structure
+### Solution Structure ✅
 
 Refactor the solution into the following layers:
 

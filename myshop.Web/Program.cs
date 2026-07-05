@@ -5,6 +5,7 @@ using DataAccess.Models;
 using BusinessLogic.Data;
 using Stripe;
 using System;
+using BusinessLogic.BL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +21,17 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
     ).AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+//* Services (Managements)
+builder.Services.AddScoped<CategoryManagement>();
+builder.Services.AddScoped<ProductManagement>();
 
+//* Session
 builder.Services.AddHttpContextAccessor();
-
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
+
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {

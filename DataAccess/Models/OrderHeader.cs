@@ -1,4 +1,4 @@
-﻿// using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace DataAccess.Models
 
         public string ApplicationUserId { get; set; }
 
-        // [ValidateNever]
+        [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
 
         public DateTime OrderDate { get; set; }
