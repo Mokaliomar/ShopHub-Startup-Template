@@ -6,6 +6,8 @@ using DataAccess.Data;
 using Stripe;
 using System;
 using BusinessLogic.BL;
+using DataAccess.Repositories.Implementations;
+using DataAccess.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,8 @@ builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
 //* Services (Managements)
 builder.Services.AddScoped<CategoryManagement>();
 builder.Services.AddScoped<ProductManagement>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, ICategoryRepository>();
 
 //* Session
 builder.Services.AddHttpContextAccessor();

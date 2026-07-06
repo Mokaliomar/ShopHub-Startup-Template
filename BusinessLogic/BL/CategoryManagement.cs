@@ -7,6 +7,7 @@ namespace BusinessLogic.BL;
 
 public class CategoryManagement
 {
+    // ! Now after making the Repository Pattern .. We need to learn how to use AutoMapper (DTOs <-> Models) so we can remove the context and make BL only responsible for business logic not Database operations too
     private readonly ApplicationDbContext _context;
     public CategoryManagement(ApplicationDbContext context)
     {
