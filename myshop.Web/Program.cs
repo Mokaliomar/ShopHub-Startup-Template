@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Models;
-using BusinessLogic.Data;
+using DataAccess.Data;
 using Stripe;
 using System;
 using BusinessLogic.BL;

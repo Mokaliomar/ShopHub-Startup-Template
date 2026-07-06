@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using BusinessLogic.Data;
+using DataAccess.Data;
 using DataAccess.Models;
 using myshop.Entities.ViewModels;
 using BusinessLogic.BL;

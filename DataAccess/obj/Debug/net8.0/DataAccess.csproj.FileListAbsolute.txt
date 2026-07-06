@@ -312,3 +312,5 @@ C:\Projects\Demo Projects\ShopHub-Startup-Template\DataAccess\obj\Debug\net8.0\D
 C:\Projects\Demo Projects\ShopHub-Startup-Template\DataAccess\obj\Debug\net8.0\refint\DataAccess.dll
 C:\Projects\Demo Projects\ShopHub-Startup-Template\DataAccess\obj\Debug\net8.0\DataAccess.pdb
 C:\Projects\Demo Projects\ShopHub-Startup-Template\DataAccess\obj\Debug\net8.0\ref\DataAccess.dll
+C:\Projects\Demo Projects\ShopHub-Startup-Template\DataAccess\bin\Debug\net8.0\DataAccess.runtimeconfig.json
+C:\Projects\Demo Projects\ShopHub-Startup-Template\DataAccess\obj\Debug\net8.0\DataAccess.genruntimeconfig.cache

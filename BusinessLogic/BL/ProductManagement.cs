@@ -1,5 +1,5 @@
 using System;
-using BusinessLogic.Data;
+using DataAccess.Data;
 using BusinessLogic.DTOs;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;

@@ -21,17 +21,17 @@ A clean ASP.NET Core MVC startup template designed for students to build E-Comme
 ## Included Modules
 
 ### Category
-- Create Category
-- View Categories
-- Edit Category
-- Delete Category
+- Create Category ✅
+- View Categories ❌
+- Edit Category ✅
+- Delete Category ✅
 
 ### Product
-- Create Product
-- Upload Product Image
-- View Products
-- Edit Product
-- Delete Product
+- Create Product ✅
+- Upload Product Image ✅
+- View Products ✅
+- Edit Product ✅
+- Delete Product ❌
 
 ## Project Structure
 
@@ -57,7 +57,7 @@ wwwroot/
 - jQuery
 - DataTables
 
-## Database
+## Database ✅
 
 Update the connection string inside:
 

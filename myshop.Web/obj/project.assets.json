@@ -4167,7 +4167,11 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.9",
-          "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "7.0.9"
+          "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "7.0.9",
+          "Microsoft.EntityFrameworkCore": "7.0.9",
+          "Microsoft.EntityFrameworkCore.Design": "7.0.9",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.9",
+          "Microsoft.EntityFrameworkCore.Tools": "7.0.9"
         },
         "compile": {
           "bin/placeholder/DataAccess.dll": {}

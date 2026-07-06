@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BusinessLogic.Migrations
+namespace DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class startuptemplate : Migration

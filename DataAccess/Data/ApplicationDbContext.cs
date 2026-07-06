@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Models;
 
-namespace BusinessLogic.Data
+namespace DataAccess.Data
 {
     public class ApplicationDbContext: IdentityDbContext
     {
