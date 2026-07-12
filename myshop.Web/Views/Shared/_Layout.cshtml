@@ -96,7 +96,7 @@
         var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
     }
 
-    @if (!(currentAction == "Login" || currentAction == "Register"))
+    @if (!(currentAction == "Login" || currentAction == "Register") && !User.IsInRole("Customer"))
     {
         <header>
             <nav class="navbar navbar-expand-sm navbar-light border-bottom">

@@ -1,0 +1,160 @@
+﻿@model ProductVM
+
+@{
+    ViewBag.PageTitle = "Product Details";
+    ViewBag.CardTitle = Model.Product.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml"; // الـ Layout الرئيسي عشان الـ Header يفضل ظاهر
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    /* الكارت الرئيسي الموحد للمشروع */
+    .details-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        padding: 30px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    /* برواز وتنسيق الصورة الكبيرة */
+    .img-container {
+        background-color: #f8fafc;
+        border: 1px solid #d0d7de;
+        border-radius: 12px;
+        padding: 20px;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .img-container img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    /* تنسيقات النصوص */
+    .product-name {
+        color: #1e3a8a;
+        /* الأزرق الفخم */
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .category-badge {
+        background-color: #f1f5fb;
+        color: #1e40af;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 1px solid #7f9cf5;
+        display: inline-block;
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+    }
+
+    .price-tag {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #1e40af;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    .description-title {
+        color: #1e3a8a;
+        font-weight: 600;
+        margin-bottom: 8px;
+        border-bottom: 2px solid #f1f5fb;
+        padding-bottom: 5px;
+    }
+
+    .description-text {
+        color: #4a5568;
+        line-height: 1.7;
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+
+    /* أزرار التحكم */
+    .btn-action {
+        padding: 12px 24px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: 0.25s ease;
+    }
+
+    .btn-add-cart {
+        background-color: #1e40af;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+    }
+
+    .btn-add-cart:hover {
+        background-color: #1e3a8a;
+        box-shadow: 0 6px 15px rgba(30, 64, 175, 0.4);
+        color: white;
+    }
+
+    .btn-back {
+        border: 1px solid #a0aec0;
+        color: #4a5568;
+        background: transparent;
+    }
+
+    .btn-back:hover {
+        background-color: #f7fafc;
+        color: #1e3a8a;
+    }
+</style>
+
+<div class="container">
+    <div class="details-card">
+        <div class="row g-5">
+
+            <div class="col-md-5">
+                <div class="img-container">
+                    @if (!string.IsNullOrEmpty(Model.Product.Img))
+                    {
+                        <img src="~/@Model.Product.Img" alt="@Model.Product.Name" />
+                    }
+                    else
+                    {
+                        <img src="/images/no-image.png" alt="No Image Available" />
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-7 d-flex flex-column justify-content-between">
+                <div>
+                    <h1 class="product-name">@Model.Product.Name</h1>
+                    <span class="category-badge">
+                        <i class="fa-solid fa-layer-group me-1"></i> @Model.Product.Category?.Name
+                    </span>
+
+                    <span class="price-tag">$@Model.Product.Price.ToString("F2")</span>
+
+                    <h5 class="description-title"><i class="fa-solid fa-align-left me-1"></i> Product Description</h5>
+                    <p class="description-text">@Model.Product.Description</p>
+                </div>
+
+                <div class="d-flex gap-3 mt-auto">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-action btn-back">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Back to Shop
+                    </a>
+                    <button type="button" class="btn btn-action btn-add-cart flex-grow-1">
+                        <i class="fa-solid fa-cart-plus me-1"></i> Add to Cart
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

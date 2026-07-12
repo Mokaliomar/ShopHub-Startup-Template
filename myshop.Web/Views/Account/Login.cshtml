@@ -96,7 +96,7 @@
                 <h4><i class="fa-solid fa-lock me-2"></i> @ViewBag.CardTitle</h4>
             </div>
 
-            <form asp-action="Login" method="post">
+            <form asp-controller="Account" asp-action="Login" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <div class="mb-3">
@@ -132,7 +132,7 @@
             </form>
 
             <div class="mt-4 text-center border-top pt-3">
-                <p class="mb-0" style="color: #718096;">Don't have an account? <a asp-action="Register" class="auth-link">Create Account</a></p>
+                <p class="mb-0" style="color: #718096;">Don't have an account? <a asp-controller="Account" asp-action="Register" class="auth-link">Create Account</a></p>
             </div>
 
         </div>

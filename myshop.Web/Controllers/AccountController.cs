@@ -6,6 +6,7 @@ using myshop.Web.ViewModels;
 
 namespace myshop.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -44,7 +45,10 @@ namespace myshop.Web.Controllers
             if (signInResult.Succeeded)
             {
                 if (string.IsNullOrEmpty(returnUrl))
-                    return RedirectToAction("Index", "Product");
+                {
+                    // return RedirectToAction("Index", "Product");
+                    return RedirectToAction("Index", "Home");
+                }
                 return Redirect(returnUrl);
             }
 
@@ -81,11 +85,12 @@ namespace myshop.Web.Controllers
             {
                 //* Adding the User Role to "Customer" By default
                 await _userManager.AddToRoleAsync(user, "Customer");
-                
+
                 var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, true, true);
                 if (signInResult.Succeeded)
                 {
-                    return RedirectToAction("Index", "Product");
+                    // return RedirectToAction("Index", "Product");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             ModelState.AddModelError(string.Empty, "Something Went wrong !");

@@ -1,8 +1,194 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<ProductVM> // أو حسب الـ Model/DTO اللي بتبعته من الـ Controller
+
+@{
+    ViewBag.PageTitle = "Welcome to Our Shop";
+    ViewBag.CardTitle = "Explore Our Products";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // نستخدم الـ Layout الرئيسي اللي فيه الـ Header هنا
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome TO VS</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    /* العنوان الرئيسي المتناسق مع بقية الصفحات */
+    .shop-header {
+        background: #f1f5fb;
+        border: 1px solid #d0d7de;
+        border-radius: 14px;
+        padding: 20px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .shop-header h2 {
+        color: #1e3a8a;
+        /* الأزرق الفخم المعتمد */
+        font-weight: 700;
+        margin: 0;
+    }
+
+    /* كارت المنتج المطور ليناسب العرض العام للمستخدمين */
+    .product-card {
+        background: #ffffff;
+        border: 1px solid #d0d7de;
+        border-radius: 14px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(30, 64, 175, 0.15);
+    }
+
+    /* منطقة الصورة */
+    .product-img-wrapper {
+        background-color: #f8fafc;
+        padding: 15px;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .product-img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    /* تفاصيل الكارت */
+    .product-body {
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .product-category {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #7f9cf5;
+        font-weight: 700;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+    }
+
+    .product-title {
+        color: #1e3a8a;
+        font-weight: 700;
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+        line-height: 1.4;
+    }
+
+    .product-description {
+        color: #4a5568;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        /* يقص النص بعد سطرين لو طويل */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex-grow: 1;
+    }
+
+    /* السعر والزرار */
+    .product-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: auto;
+        border-top: 1px solid #f1f5fb;
+        padding-top: 12px;
+    }
+
+    .product-price {
+        color: #1e40af;
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
+    .btn-details {
+        padding: 8px 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        background-color: #1e40af;
+        color: white;
+        border: none;
+        transition: 0.2s ease;
+        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .btn-details:hover {
+        background-color: #1e3a8a;
+        color: white;
+        box-shadow: 0 6px 12px rgba(30, 64, 175, 0.3);
+    }
+</style>
+
+<div class="container mb-5">
+    <div class="shop-header">
+        <h2><i class="fa-solid fa-store me-2"></i> @ViewBag.CardTitle</h2>
+    </div>
+
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product-card">
+
+                        <div class="product-img-wrapper">
+                            @if (!string.IsNullOrEmpty(item.Product.Img))
+                            {
+                                <img src="~/@item.Product.Img" class="product-img" alt="@item.Product.Name" />
+                            }
+                            else
+                            {
+                                <img src="/images/no-image.png" class="product-img" alt="No Image Available" />
+                            }
+                        </div>
+
+                        <div class="product-body">
+                            <span class="product-category">
+                                <i class="fa-solid fa-layer-group"></i> @item.Product.Category?.Name
+                            </span>
+                            <h5 class="product-title">@item.Product.Name</h5>
+                            <p class="product-description">@item.Product.Description</p>
+
+                            <div class="product-footer">
+                                <span class="product-price">
+                                    $@item.Product.Price.ToString("F2")
+                                </span>
+                                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id"
+                                   class="btn-details">
+                                    <i class="fa-solid fa-eye me-1"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center my-5">
+                <i class="fa-solid fa-box-open fa-3x mb-3" style="color: #a0aec0;"></i>
+                <h4 style="color: #718096;">No products available at the moment.</h4>
+            </div>
+        }
+    </div>
 </div>

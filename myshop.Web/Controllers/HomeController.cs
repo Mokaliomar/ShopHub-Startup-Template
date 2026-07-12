@@ -1,33 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DataAccess.Data;
-using DataAccess.Models;
-using System.Diagnostics;
+using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using myshop.Entities.ViewModels;
 
 namespace myshop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _logger = logger;
+            _unitOfWork = unitOfWork;
         }
-
+        // GET: HomeController
         public IActionResult Index()
         {
-            return View();
+            var productsWithCategories = _unitOfWork.ProductRepository.GetProductsWithCategories();
+            IEnumerable<ProductVM> productVM = productsWithCategories.Select(p => new ProductVM
+            {
+                Product = p
+            });
+
+
+            return View(productVM);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Details(int? id)
         {
-            return View();
-        }
+            var productVM = new ProductVM()
+            {
+                Product = _unitOfWork.ProductRepository.GetProductsWithCategories().FirstOrDefault(p => p.Id == id)
+            };
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(productVM);
         }
     }
 }

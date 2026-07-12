@@ -5,9 +5,10 @@ using BusinessLogic.BL;
 using Microsoft.AspNetCore.Authorization;
 
 // namespace myshop.Web.Areas.Admin.Controllers
-namespace myshop.Web.Controllers
+namespace myshop.Web.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         // private readonly ApplicationDbContext _context;
