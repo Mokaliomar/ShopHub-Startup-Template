@@ -8,6 +8,8 @@ using System;
 using BusinessLogic.BL;
 using DataAccess.Repositories.Implementations;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,18 +18,26 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
-    )) ;
+    ));
 
-builder.Services.AddIdentity<ApplicationUser,IdentityRole>(
-    options=>options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
+    options => options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4)
     ).AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/Login";
+    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+});
 
 //* Services (Managements)
 builder.Services.AddScoped<CategoryManagement>();
 builder.Services.AddScoped<ProductManagement>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICategoryRepository, ICategoryRepository>();
+// builder.Services.AddScoped<IProductRepository, ProductRepository>();
+// builder.Services.AddScoped<ICategoryRepository, ICategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //* Session
 builder.Services.AddHttpContextAccessor();
@@ -45,8 +55,6 @@ using (var scope = app.Services.CreateScope())
 
 
 
-
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -61,18 +69,25 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
-app.UseAuthentication();
+app.UseAuthentication(); // for the Identity Framework
 
 app.UseAuthorization();
 
 app.UseSession();
 
 app.MapRazorPages();
+
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
+    pattern: "{controller=Account}/{action=Login}"
+);
+
+app.MapControllerRoute(
+    name: "Product",
     pattern: "{controller=Product}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,0 +1,144 @@
+﻿@model LoginVM
+
+@{
+    ViewBag.PageTitle = "Identity Access";
+    ViewBag.CardTitle = "Welcome Back"; 
+    @* Layout = "~/Views/Shared/_Dashboard.cshtml"; // أو الـ Layout الافتراضي بتاعك *@
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    /* الحفاظ على هوية الـ Custom Card الموحدة */
+    .custom-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        padding: 24px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+
+    .custom-card-header {
+        background: #f1f5fb;
+        border-bottom: 1px solid #d0d7de;
+        padding: 18px 0;
+        text-align: center;
+        border-radius: 14px 14px 0 0;
+        margin-bottom: 25px;
+    }
+
+    .custom-card-header h4 {
+        color: #1e3a8a; /* الأزرق الفخم المعتمد */
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .form-control {
+        background-color: #fefefe;
+        border: 1px solid #a0aec0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        transition: 0.25s ease;
+        color: #1e3a8a;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .form-control::placeholder {
+        color: #7f9cf5;
+    }
+
+    .form-control:focus {
+        border-color: #1e40af;
+        box-shadow: 0 0 0 0.2rem rgba(59,130,246,0.25);
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #1e3a8a;
+    }
+
+    .btn-primary {
+        padding: 10px 22px;
+        font-weight: 600;
+        border-radius: 8px;
+        background-color: #1e40af;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(30,64,175,0.3);
+        width: 100%; /* عشان ياخد العرض كامل في اللوجن */
+    }
+
+    .btn-primary:hover {
+        background-color: #1e3a8a;
+        box-shadow: 0 6px 15px rgba(30,64,175,0.4);
+    }
+
+    .auth-link {
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .auth-link:hover {
+        color: #1e3a8a;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-5"> <div class="custom-card">
+
+            <div class="custom-card-header">
+                <h4><i class="fa-solid fa-lock me-2"></i> @ViewBag.CardTitle</h4>
+            </div>
+
+            <form asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">
+                        <i class="fa-solid fa-envelope me-1"></i> Email Address
+                    </label>
+                    <input asp-for="Email" class="form-control" placeholder="username@example.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">
+                        <i class="fa-solid fa-key me-1"></i> Password
+                    </label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" class="form-check-input" style="cursor:pointer;" />
+                        <label asp-for="RememberMe" class="form-check-label" style="color: #1e3a8a; font-weight:500; cursor:pointer;">Remember Me</label>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="ReturnUrl">
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i> Sign In
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-4 text-center border-top pt-3">
+                <p class="mb-0" style="color: #718096;">Don't have an account? <a asp-action="Register" class="auth-link">Create Account</a></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+}

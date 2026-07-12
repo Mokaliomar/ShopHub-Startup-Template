@@ -1,0 +1,170 @@
+﻿@model RegisterVM
+
+@{
+    ViewBag.PageTitle = "Identity Access";
+    ViewBag.CardTitle = "Register New Account";
+    @* Layout = "~/Views/Shared/_Dashboard.cshtml"; *@
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    /* الحفاظ على الهوية البصرية الموحدة للمشروع */
+    .custom-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        padding: 24px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .custom-card-header {
+        background: #f1f5fb;
+        border-bottom: 1px solid #d0d7de;
+        padding: 18px 0;
+        text-align: center;
+        border-radius: 14px 14px 0 0;
+        margin-bottom: 20px;
+    }
+
+    .custom-card-header h4 {
+        color: #1e3a8a;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .form-control {
+        background-color: #fefefe;
+        border: 1px solid #a0aec0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        transition: 0.25s ease;
+        color: #1e3a8a;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .form-control::placeholder {
+        color: #7f9cf5;
+    }
+
+    .form-control:focus {
+        border-color: #1e40af;
+        box-shadow: 0 0 0 0.2rem rgba(59,130,246,0.25);
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #1e3a8a;
+    }
+
+    .btn-primary {
+        padding: 10px 22px;
+        font-weight: 600;
+        border-radius: 8px;
+        background-color: #1e40af;
+        color: white;
+        border: none;
+        box-shadow: 0 4px 12px rgba(30,64,175,0.3);
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-color: #1e3a8a;
+        box-shadow: 0 6px 15px rgba(30,64,175,0.4);
+    }
+
+    .auth-link {
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .auth-link:hover {
+        color: #1e3a8a;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="custom-card">
+
+            <div class="custom-card-header">
+                <h4><i class="fa-solid fa-user-plus me-2"></i> @ViewBag.CardTitle</h4>
+            </div>
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">
+                        <i class="fa-solid fa-user me-1"></i> Full Name
+                    </label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter your full name..." />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">
+                        <i class="fa-solid fa-envelope me-1"></i> Email Address
+                    </label>
+                    <input asp-for="Email" class="form-control" placeholder="example@myshop.com" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-7 mb-3">
+                        <label asp-for="Address" class="form-label">
+                            <i class="fa-solid fa-location-dot me-1"></i> Street Address
+                        </label>
+                        <input asp-for="Address" class="form-control" placeholder="e.g. 123 Main St" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <label asp-for="City" class="form-label">
+                            <i class="fa-solid fa-city me-1"></i> City
+                        </label>
+                        <input asp-for="City" class="form-control" placeholder="e.g. Cairo" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Password" class="form-label">
+                            <i class="fa-solid fa-key me-1"></i> Password
+                        </label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="••••••••" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label">
+                            <i class="fa-solid fa-user-shield me-1"></i> Confirm Password
+                        </label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="••••••••" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mb-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-user-check me-1"></i> Sign Up
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-4 text-center border-top pt-3">
+                <p class="mb-0" style="color: #718096;">Already have an account? <a asp-action="Login" class="auth-link">Sign In Here</a></p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

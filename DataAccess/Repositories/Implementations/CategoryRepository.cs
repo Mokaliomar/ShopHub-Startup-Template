@@ -5,14 +5,19 @@ using DataAccess.Repositories.Interfaces;
 
 namespace DataAccess.Repositories.Implementations;
 
-public class CategoryRepository : ICategoryRepository
+public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
 {
-    private readonly ApplicationDbContext _context;
-    public CategoryRepository(ApplicationDbContext context)
+    // private readonly ApplicationDbContext _context;
+    public CategoryRepository(ApplicationDbContext context) : base(context)
+    {}
+    
+    //! If you will not edit the method in the parent class, so you will not need to override, In our case we just are testing
+    public override IEnumerable<Category> All()
     {
-        _context = context;
+        return dbSet.ToList();
     }
 
+/* Without GenericRepository
     public IEnumerable<Category> GetCategories() => _context.Categories;
     public Category GetCategoryById(int? Id) => _context.Categories.FirstOrDefault(c => c.Id == Id);
     public void CreateCategory(Category category) => _context.Categories.Add(category);
@@ -22,4 +27,5 @@ public class CategoryRepository : ICategoryRepository
         var category = _context.Categories.FirstOrDefault(c => c.Id == Id);
         _context.Categories.Remove(category);
     }
+ */
 }

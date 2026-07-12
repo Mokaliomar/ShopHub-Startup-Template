@@ -3,20 +3,22 @@ using DataAccess.Data;
 using BusinessLogic.DTOs;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using DataAccess.Repositories.Interfaces;
 
 namespace BusinessLogic.BL;
 
 public class ProductManagement
 {
-    private readonly ApplicationDbContext _context;
-    public ProductManagement(ApplicationDbContext context)
+    // private readonly ApplicationDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
+    public ProductManagement(IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
     }
 
     public IEnumerable<ProductDto> GetProducts()
     {
-        return _context.Products.Include(x => x.Category)
+        return _unitOfWork.ProductRepository.GetProductsWithCategories()
                .Select(x => new ProductDto
                {
                    Id = x.Id,
@@ -36,14 +38,14 @@ public class ProductManagement
         {
             if (product.Id == 0)
             {
-                _context.Products.Add(product);
+                _unitOfWork.ProductRepository.Create(product);
             }
             else // Update Product
             {
                 //! Need a validation if someone used a Postman to update a product
-                _context.Products.Update(product);
+                _unitOfWork.ProductRepository.Update(product);
             }
-            _context.SaveChanges();
+            _unitOfWork.Save();
             return true;
         }
         catch (Exception ex)
@@ -53,15 +55,15 @@ public class ProductManagement
         }
     }
 
-    public bool DeleteProduct(int Id)
+    public bool DeleteProduct(int? Id)
     {
         try
         {
             var product = GetProductById(Id);
             if (product == null)
                 return false;
-            _context.Products.Remove(product);
-            _context.SaveChanges();
+            _unitOfWork.ProductRepository.Delete(Id);
+            _unitOfWork.Save();
             return true;
         }
         catch(Exception ex)
@@ -70,7 +72,7 @@ public class ProductManagement
             return false;
         }
     }
-    public bool DeleteProduct(Product product)
+    /* public bool DeleteProduct(Product product)
     {
         try
         {
@@ -83,6 +85,6 @@ public class ProductManagement
             System.Diagnostics.Debug.WriteLine(ex.Message);
             return false;
         }
-    }
-    public Product? GetProductById(int? Id) => _context.Products.FirstOrDefault(p => p.Id == Id);
+    } */
+    public Product? GetProductById(int? Id) => _unitOfWork.ProductRepository.GetById(Id);
 }

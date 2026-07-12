@@ -2,33 +2,36 @@ using System;
 using DataAccess.Data;
 using BusinessLogic.DTOs;
 using DataAccess.Models;
+using DataAccess.Repositories.Interfaces;
+using DataAccess.Repositories.Implementations;
 
 namespace BusinessLogic.BL;
 
 public class CategoryManagement
 {
     // ! Now after making the Repository Pattern .. We need to learn how to use AutoMapper (DTOs <-> Models) so we can remove the context and make BL only responsible for business logic not Database operations too
-    private readonly ApplicationDbContext _context;
-    public CategoryManagement(ApplicationDbContext context)
+    // private readonly ApplicationDbContext _context;
+    private readonly IUnitOfWork _unitOfWork;
+    public CategoryManagement(IUnitOfWork unitOfWork)
     {
-        _context = context;
+        _unitOfWork = unitOfWork;
     }
 
-    public Category? Find(int? id) => _context.Categories.Find(id);
+    public Category? Find(int? id) => _unitOfWork.CategoryRepository.GetById(id);
 
-    public IEnumerable<Category> GetCategories() => _context.Categories.ToList();
+    public IEnumerable<Category> GetCategories() => _unitOfWork.CategoryRepository.All();
 
     public IEnumerable<CategoryLookUpDto> GetCategoriesLookUp()
     {
-        return _context.Categories.Select(x => new CategoryLookUpDto { Id = x.Id, Name = x.Name }).ToList();
+        return _unitOfWork.CategoryRepository.All().Select(x => new CategoryLookUpDto { Id = x.Id, Name = x.Name }).ToList();
     }
 
     public bool CreateCategory(Category category)
     {
         try
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+            _unitOfWork.CategoryRepository.Create(category);
+            _unitOfWork.Save();
             return true;
         }
         catch (Exception ex)
@@ -42,8 +45,8 @@ public class CategoryManagement
     {
         try
         {
-            _context.Categories.Update(category);
-            _context.SaveChanges();
+            _unitOfWork.CategoryRepository.Update(category);
+            _unitOfWork.Save();
             return true;
         }
         catch(Exception ex)
@@ -58,9 +61,9 @@ public class CategoryManagement
         try
         {
             // _context.Categories.Where(x => x.Id == id).FirstOrDefault();
-            var categoryToDelete = _context.Categories.FirstOrDefault(x => x.Id == id);
-            _context.Categories.Remove(categoryToDelete);
-            _context.SaveChanges();
+            // var categoryToDelete = _unitOfWork.CategoryRepository.GetById(id);
+            _unitOfWork.CategoryRepository.Delete(id);
+            _unitOfWork.Save();
             return true;
         }
         catch(Exception ex)
@@ -69,5 +72,5 @@ public class CategoryManagement
             return false;
         }
     }
-    public Category? GetCategoryById(int? Id) => _context.Categories.FirstOrDefault(c => c.Id == Id);
+    public Category? GetCategoryById(int? Id) => _unitOfWork.CategoryRepository.GetById(Id);
 }

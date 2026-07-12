@@ -2,12 +2,15 @@
 using DataAccess.Data;
 using DataAccess.Models;
 using BusinessLogic.BL;
+using Microsoft.AspNetCore.Authorization;
 
-namespace myshop.Web.Areas.Admin.Controllers
+// namespace myshop.Web.Areas.Admin.Controllers
+namespace myshop.Web.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        // private readonly ApplicationDbContext _context;
         private readonly CategoryManagement _categoryManagement;
 
         public CategoryController(CategoryManagement categoryManagement)

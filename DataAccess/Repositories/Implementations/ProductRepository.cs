@@ -6,14 +6,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories.Implementations;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository : GenericRepository<Product>, IProductRepository
 {
-    private readonly ApplicationDbContext _context;
-    public ProductRepository(ApplicationDbContext context)
+    public ProductRepository(ApplicationDbContext context) : base(context)
+    {}
+
+    public IEnumerable<Product> GetProductsWithCategories()
     {
-        _context = context;
+        return dbSet.Include(x => x.Category);
     }
 
+
+    /* Without GenericRepository
     public IEnumerable<Product> GetProducts() => _context.Products;
     public IEnumerable<Product> GetProductsWithCategories() => _context.Products.Include(p => p.Category);
     public Product? GetProductById(int? Id) => _context.Products.FirstOrDefault(p => p.Id == Id);
@@ -23,5 +27,5 @@ public class ProductRepository : IProductRepository
     {
         var product = _context.Products.FirstOrDefault(p => p.Id == Id);
         _context.Products.Remove(product);
-    }
+    } */
 }

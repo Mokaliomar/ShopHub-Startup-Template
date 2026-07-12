@@ -3,11 +3,7 @@ using DataAccess.Models;
 
 namespace DataAccess.Repositories.Interfaces;
 
-public interface ICategoryRepository
-{
-    IEnumerable<Category> GetCategories();
-    Category GetCategoryById(int? Id);
-    void CreateCategory(Category category);
-    void UpdateCategory(Category category);
-    void DeleteCategory(int Id);
-}
+//* Used for a specific methods for the Category class only
+//* Since we don't have a specific thing for the Category class, so it will be empty
+public interface ICategoryRepository : IGenericRepository<Category>
+{}

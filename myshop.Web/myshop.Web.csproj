@@ -109,6 +109,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Shared\Components\" />
+    <Folder Include="Views\Account\" />
     <Folder Include="wwwroot\Images\Products\" />
     <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>

@@ -6,9 +6,12 @@ using DataAccess.Data;
 using DataAccess.Models;
 using myshop.Entities.ViewModels;
 using BusinessLogic.BL;
+using Microsoft.AspNetCore.Authorization;
 
-namespace myshop.Web.Areas.Admin.Controllers
+// namespace myshop.Web.Areas.Admin.Controllers
+namespace myshop.Web.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         // private readonly ApplicationDbContext _context;
@@ -160,7 +163,7 @@ namespace myshop.Web.Areas.Admin.Controllers
             }
 
             //! NOT FINISHED
-            bool isDeleted = _productManagement.DeleteProduct(productIndb);
+            bool isDeleted = _productManagement.DeleteProduct(id);
 
             var oldimg = Path.Combine(_webHostEnvironment.WebRootPath, productIndb.Img.TrimStart('\\'));
 
