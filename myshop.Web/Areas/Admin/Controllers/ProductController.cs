@@ -35,7 +35,7 @@ namespace myshop.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetData()
         {
-            var products = _productManagement.GetProducts().ToList();
+            var products = _productManagement.GetProductsWithCategories().ToList();
 
             //?? What does this return type does ????
             return Json(new { data = products });
@@ -172,8 +172,6 @@ namespace myshop.Web.Areas.Admin.Controllers
             {
                 System.IO.File.Delete(oldimg);
             }
-
-            // _context.SaveChanges();
 
             return Json(new { success = true, message = "file has been Deleted" });
         }

@@ -1,37 +1,54 @@
+using BusinessLogic.BL;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using myshop.Entities.ViewModels;
+using myshop.Web.ViewModels;
 
 namespace myshop.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public HomeController(IUnitOfWork unitOfWork)
+        private readonly ProductManagement _productManagement;
+        public HomeController(ProductManagement productManagement)
         {
-            _unitOfWork = unitOfWork;
+            _productManagement = productManagement;
         }
         // GET: HomeController
         public IActionResult Index()
         {
-            var productsWithCategories = _unitOfWork.ProductRepository.GetProductsWithCategories();
-            IEnumerable<ProductVM> productVM = productsWithCategories.Select(p => new ProductVM
+            var productsWithCategories = _productManagement.GetProductsWithCategories();
+            IEnumerable<ProductShopIndexVM> product = productsWithCategories.Select(x => new ProductShopIndexVM
             {
-                Product = p
+                Id = x.Id,
+                Image = x.Image,
+                CategoryName = x.CategoryName,
+                Name = x.Name,
+                Description = x.Description,
+                Price = x.Price,
             });
 
-
-            return View(productVM);
+            return View(product);
         }
 
         public IActionResult Details(int? id)
         {
-            var productVM = new ProductVM()
+            /* var productVM = new ProductVM()
             {
-                Product = _unitOfWork.ProductRepository.GetProductsWithCategories().FirstOrDefault(p => p.Id == id)
+                Product = _productManagement.GetProductWithCategoryById(id),
+            }; */
+
+            var theProduct = _productManagement.GetProductWithCategoryById(id);
+            var product = new ProductShopIndexVM()
+            {
+                Id = theProduct.Id,
+                Image = theProduct.Img,
+                CategoryName = theProduct.Category.Name,
+                Name = theProduct.Name,
+                Description = theProduct.Description,
+                Price = theProduct.Price,
             };
 
-            return View(productVM);
+            return View(product);
         }
     }
 }

@@ -16,12 +16,13 @@ public class ProductManagement
         _unitOfWork = unitOfWork;
     }
 
-    public IEnumerable<ProductDto> GetProducts()
+    public IEnumerable<ProductDto> GetProductsWithCategories()
     {
         return _unitOfWork.ProductRepository.GetProductsWithCategories()
                .Select(x => new ProductDto
                {
                    Id = x.Id,
+                   Image = x.Img,
                    Name = x.Name,
                    Description = x.Description,
                    Price = x.Price,
@@ -59,7 +60,7 @@ public class ProductManagement
     {
         try
         {
-            var product = GetProductById(Id);
+            var product = GetProductWithCategoryById(Id);
             if (product == null)
                 return false;
             _unitOfWork.ProductRepository.Delete(Id);
@@ -86,5 +87,7 @@ public class ProductManagement
             return false;
         }
     } */
+    public Product? GetProductWithCategoryById(int? Id) => _unitOfWork.ProductRepository.GetProductsWithCategories().FirstOrDefault(p => p.Id == Id);
+    
     public Product? GetProductById(int? Id) => _unitOfWork.ProductRepository.GetById(Id);
 }

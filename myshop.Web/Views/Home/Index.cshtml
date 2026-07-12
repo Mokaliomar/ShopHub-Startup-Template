@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductVM> // أو حسب الـ Model/DTO اللي بتبعته من الـ Controller
+﻿@model IEnumerable<ProductShopIndexVM> // أو حسب الـ Model/DTO اللي بتبعته من الـ Controller
 
 @{
     ViewBag.PageTitle = "Welcome to Our Shop";
@@ -151,9 +151,9 @@
                     <div class="product-card">
 
                         <div class="product-img-wrapper">
-                            @if (!string.IsNullOrEmpty(item.Product.Img))
+                            @if (!string.IsNullOrEmpty(item.Image))
                             {
-                                <img src="~/@item.Product.Img" class="product-img" alt="@item.Product.Name" />
+                                <img src="~/@item.Image" class="product-img" alt="@item.Name" />
                             }
                             else
                             {
@@ -163,16 +163,16 @@
 
                         <div class="product-body">
                             <span class="product-category">
-                                <i class="fa-solid fa-layer-group"></i> @item.Product.Category?.Name
+                                <i class="fa-solid fa-layer-group"></i> @item.CategoryName
                             </span>
-                            <h5 class="product-title">@item.Product.Name</h5>
-                            <p class="product-description">@item.Product.Description</p>
+                            <h5 class="product-title">@item.Name</h5>
+                            <p class="product-description">@item.Description</p>
 
                             <div class="product-footer">
                                 <span class="product-price">
-                                    $@item.Product.Price.ToString("F2")
+                                    $@item.Price.ToString("F2")
                                 </span>
-                                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Product.Id"
+                                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Id"
                                    class="btn-details">
                                     <i class="fa-solid fa-eye me-1"></i> View Details
                                 </a>

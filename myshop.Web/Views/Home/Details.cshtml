@@ -1,8 +1,8 @@
-﻿@model ProductVM
+﻿@model ProductShopIndexVM
 
 @{
     ViewBag.PageTitle = "Product Details";
-    ViewBag.CardTitle = Model.Product.Name;
+    ViewBag.CardTitle = Model.Name;
     Layout = "~/Views/Shared/_Layout.cshtml"; // الـ Layout الرئيسي عشان الـ Header يفضل ظاهر
 }
 
@@ -121,9 +121,9 @@
 
             <div class="col-md-5">
                 <div class="img-container">
-                    @if (!string.IsNullOrEmpty(Model.Product.Img))
+                    @if (!string.IsNullOrEmpty(Model.Image))
                     {
-                        <img src="~/@Model.Product.Img" alt="@Model.Product.Name" />
+                        <img src="~/@Model.Image" alt="@Model.Name" />
                     }
                     else
                     {
@@ -134,15 +134,15 @@
 
             <div class="col-md-7 d-flex flex-column justify-content-between">
                 <div>
-                    <h1 class="product-name">@Model.Product.Name</h1>
+                    <h1 class="product-name">@Model.Name</h1>
                     <span class="category-badge">
-                        <i class="fa-solid fa-layer-group me-1"></i> @Model.Product.Category?.Name
+                        <i class="fa-solid fa-layer-group me-1"></i> @Model.CategoryName
                     </span>
 
-                    <span class="price-tag">$@Model.Product.Price.ToString("F2")</span>
+                    <span class="price-tag">$@Model.Price.ToString("F2")</span>
 
                     <h5 class="description-title"><i class="fa-solid fa-align-left me-1"></i> Product Description</h5>
-                    <p class="description-text">@Model.Product.Description</p>
+                    <p class="description-text">@Model.Description</p>
                 </div>
 
                 <div class="d-flex gap-3 mt-auto">

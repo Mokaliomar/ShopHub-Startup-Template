@@ -16,6 +16,11 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
         return dbSet.Include(x => x.Category);
     }
 
+    public Product? GetProductWithCategory(int Id)
+    {
+        return dbSet.Include(x => x.Category).FirstOrDefault(p => p.Id == Id);
+    }
+
 
     /* Without GenericRepository
     public IEnumerable<Product> GetProducts() => _context.Products;
