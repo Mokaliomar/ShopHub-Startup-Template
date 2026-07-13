@@ -1,4 +1,4 @@
-# ShopHub Startup Template
+# ShopHub Startup
 
 A clean ASP.NET Core MVC startup template designed for students to build E-Commerce projects using the Repository Pattern and Entity Framework Core.
 
@@ -13,16 +13,16 @@ A clean ASP.NET Core MVC startup template designed for students to build E-Comme
 - AdminLTE Dashboard
 - DataTables Integration
 - Toastr Notifications
-- SweetAlert2
-- TinyMCE Support (Optional)
 - File Upload Support
 - Session Configuration
+<!-- - SweetAlert2 -->
+<!-- - TinyMCE Support (Optional) -->
 
 ## Included Modules
 
 ### Category
 - Create Category ✅
-- View Categories ❌
+- View Categories ✅
 - Edit Category ✅
 - Delete Category ✅
 
@@ -31,19 +31,33 @@ A clean ASP.NET Core MVC startup template designed for students to build E-Comme
 - Upload Product Image ✅
 - View Products ✅
 - Edit Product ✅
-- Delete Product ❌
+- Delete Product ✅
 
 ## Project Structure
 
 ```
-Controllers/
+BusinessLogic/
+    BL/
+    DTOs
+
 DataAccess/
+    Data/
+    Migrations/
+    Models/
+    Repositories/
+
 Entities/
     Models/
     ViewModels/
-Repositories/
-Views/
-wwwroot/
+myshop.Web/
+    Areas/
+        Admin/
+            Controllers/
+            Views/
+    Controllers/
+    Views/
+    ViewModels/
+    wwwroot/
 ```
 
 ## Technologies
@@ -87,7 +101,7 @@ dotnet ef database update
 - ViewModels
 - TempData Notifications
 
-## Notes
+<!-- ## Notes
 
 This template is intended as a starting point for educational E-Commerce projects. Students are expected to extend it with additional features such as:
 
@@ -97,8 +111,19 @@ This template is intended as a starting point for educational E-Commerce project
 - Reviews
 - Wishlist
 - Authentication Enhancements
-- Dashboard Analytics
+- Dashboard Analytics -->
 
-## License
+<!-- ## License
 
-Educational Use Only.
+Educational Use Only. -->
+
+## 🔑 Demo Accounts
+
+To test the application's different roles and functionalities, you can use the following pre-configured accounts:
+
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | OmarAdmin@gmail.com | OmarAdmin12345# |
+| **Customer / User** | OmarMohamed@yahoo.com | OmarMohamed200512345# |
+
+> **Note:** Make sure you have executed the database migrations or database script before attempting to log in with these credentials.

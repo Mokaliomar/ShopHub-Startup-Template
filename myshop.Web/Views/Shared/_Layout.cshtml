@@ -102,7 +102,7 @@
             <nav class="navbar navbar-expand-sm navbar-light border-bottom">
                 <div class="container">
 
-                    <a class="navbar-brand nav-link-box home-box" asp-controller="Product" asp-action="Index">
+                    <a class="navbar-brand nav-link-box home-box" asp-area="Admin" asp-controller="Product" asp-action="Index">
                         myshop.Web
                     </a>
 
@@ -113,12 +113,12 @@
                     <div class="collapse navbar-collapse" id="navbarContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link nav-link-box" asp-controller="Product" asp-action="Index">
+                                <a class="nav-link nav-link-box" asp-area="Admin" asp-controller="Product" asp-action="Index">
                                     Products
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-link-box" asp-controller="Category" asp-action="Index">
+                                <a class="nav-link nav-link-box" asp-area="Admin" asp-controller="Category" asp-action="Index">
                                     Categories
                                 </a>
                             </li>

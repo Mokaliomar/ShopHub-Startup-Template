@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260712235530_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,7 +187,7 @@ namespace DataAccess.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "Apple M3 chip, 16GB RAM, 512GB SSD, Space Gray.",
-                            Img = "Images/Products/4eb463ee-d056-4ff7-94a0-bc2418c1f866.png",
+                            Img = "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500",
                             Name = "MacBook Pro 14",
                             Price = 1999.00m
                         },
@@ -193,7 +196,7 @@ namespace DataAccess.Migrations
                             Id = 2,
                             CategoryId = 1,
                             Description = "Intel Core i7, 16GB RAM, 512GB SSD, InfinityEdge Display.",
-                            Img = "Images/Products/ef491e09-7bef-4e18-af5c-71441104b8eb.jpg",
+                            Img = "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500",
                             Name = "Dell XPS 13",
                             Price = 1249.00m
                         },
@@ -202,7 +205,7 @@ namespace DataAccess.Migrations
                             Id = 3,
                             CategoryId = 2,
                             Description = "Titanium design, A17 Pro chip, 48MP Main camera.",
-                            Img = "Images/Products/c42a18f3-79d6-44c9-9047-438d295dbacd.webp",
+                            Img = "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500",
                             Name = "iPhone 15 Pro",
                             Price = 999.00m
                         },
@@ -211,17 +214,17 @@ namespace DataAccess.Migrations
                             Id = 4,
                             CategoryId = 2,
                             Description = "Dynamic AMOLED 2X, AI Camera Features, 128GB Storage.",
-                            Img = "Images/Products/c1db582a-79c3-40ca-bdf6-f939bdd40e5a.jpg",
-                            Name = "Samsung Galaxy A17",
+                            Img = "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500",
+                            Name = "Samsung Galaxy S24",
                             Price = 799.00m
                         },
                         new
                         {
                             Id = 5,
                             CategoryId = 3,
-                            Description = "Dynamic AMOLED 2X, AI Camera Features, 256GB Storage.",
-                            Img = "Images/Products/7462ab44-1ae1-490d-bf55-c3c550ce72c2.jpg",
-                            Name = "Samsung S20 FE 5G",
+                            Description = "Active Noise Cancelling, 30-hour battery life, Bluetooth 5.2.",
+                            Img = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
+                            Name = "Wireless Headphones",
                             Price = 249.00m
                         });
                 });
