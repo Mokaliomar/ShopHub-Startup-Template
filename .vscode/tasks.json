@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "sqlproj: Build DatabaseScript",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"c:/Projects/Demo Projects/ShopHub-Startup-Template/DatabaseScript/DatabaseScript.sqlproj"
+			],
+			"problemMatcher": "$sqlproj-problem-matcher",
+			"isBackground": true,
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Builds the DatabaseScript SQL project"
+		},
+		{
+			"label": "sqlproj: Build DatabaseProjectMyShop",
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"c:/Projects/Demo Projects/ShopHub-Startup-Template/DatabaseProjectMyShop/DatabaseProjectMyShop.sqlproj"
+			],
+			"problemMatcher": "$sqlproj-problem-matcher",
+			"isBackground": true,
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Builds the DatabaseProjectMyShop SQL project"
+		}
+	]
+}

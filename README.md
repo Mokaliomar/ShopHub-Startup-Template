@@ -127,3 +127,36 @@ To test the application's different roles and functionalities, you can use the f
 | **Customer / User** | OmarMohamed@yahoo.com | OmarMohamed200512345# |
 
 > **Note:** Make sure you have executed the database migrations or database script before attempting to log in with these credentials.
+
+
+## Project Screens
+### Login / Register Screens
+![Login Screen](./Docs/Screenshots/Login%20Screen.png)
+![Register Screen](./Docs/Screenshots/Register%20Screen.png)
+
+### Customer Home Page
+![Customer Home Page](./Docs/Screenshots/User%20Home%20Page%20Screen.png)
+
+### Customer View Product Details
+![View Product Details](./Docs/Screenshots/Product%20Details%20Screen.png)
+
+### Admin View Product Dashboard
+![Admin Product Dashboard](./Docs/Screenshots/Admin%20View%20Product%20Screen.png)
+
+### Admin Create Product
+![Admin Create Product](./Docs/Screenshots/Admin%20Create%20Product.png)
+
+### Admin Edit Product
+![Admin Edit Product](./Docs/Screenshots/Admin%20Edit%20Product%20Screen.png)
+
+### Admin View Categories
+![Admin View Categories](./Docs/Screenshots/Admin%20View%20Categories%20Screen.png)
+
+### Admin Create Category
+![Admin Create Category](./Docs/Screenshots/Admin%20Create%20Category%20Screen.png)
+
+### Admin Edit Category
+![Admin Edit Category](./Docs/Screenshots/Admin%20Edit%20Category%20Screen.png)
+
+### Admin Delete Category
+![Admin Delete Category](./Docs/Screenshots/Admin%20Delete%20Category%20Screen.png)
