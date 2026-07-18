@@ -7,6 +7,9 @@ using DataAccess.Models;
 using myshop.Entities.ViewModels;
 using BusinessLogic.BL;
 using Microsoft.AspNetCore.Authorization;
+using BusinessLogic.Services.Interfaces;
+using System.Net;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 // namespace myshop.Web.Areas.Admin.Controllers
 namespace myshop.Web.Areas.Admin.Controllers
@@ -18,13 +21,13 @@ namespace myshop.Web.Areas.Admin.Controllers
         // private readonly ApplicationDbContext _context;
         private readonly ProductManagement _productManagement;
         private readonly CategoryManagement _categoryManagement;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IFileService _fileService;
 
-        public ProductController(ProductManagement productManagement, CategoryManagement categoryManagement, IWebHostEnvironment webHostEnvironment)
+        public ProductController(ProductManagement productManagement, CategoryManagement categoryManagement, IFileService fileService)
         {
             _productManagement = productManagement;
             _categoryManagement = categoryManagement;
-            _webHostEnvironment = webHostEnvironment;
+            _fileService = fileService;
         }
 
         public IActionResult Index()
@@ -37,7 +40,7 @@ namespace myshop.Web.Areas.Admin.Controllers
         {
             var products = _productManagement.GetProductsWithCategories().ToList();
 
-            //?? What does this return type does ????
+            // // ?? What does this return type does ????
             return Json(new { data = products });
         }
 
@@ -61,7 +64,7 @@ namespace myshop.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                string RootPath = _webHostEnvironment.WebRootPath;
+                /* string RootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
                     string filename = Guid.NewGuid().ToString();
@@ -73,6 +76,17 @@ namespace myshop.Web.Areas.Admin.Controllers
                         file.CopyTo(filestream);
                     }
                     productVM.Product.Img = @"Images\Products\" + filename + ext;
+                } */
+                var validImage = _fileService.ValidateImage(file);
+                if (validImage.isValid)
+                {
+                    string fileNameWithExtension = _fileService.UploadFile(file, @"Images\Products");
+                    if (fileNameWithExtension != "")
+                        productVM.Product.Img = @"Images\Products\" + fileNameWithExtension;
+                }
+                else
+                {
+                    ModelState.AddModelError("", validImage.errorMessage);
                 }
 
                 bool isAdded = _productManagement.UpsertProduct(productVM.Product);
@@ -88,6 +102,7 @@ namespace myshop.Web.Areas.Admin.Controllers
                 Value = x.Id.ToString(),
                 Text = x.Name
             });
+
             return View(productVM);
         }
         [HttpGet]
@@ -116,32 +131,27 @@ namespace myshop.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                string RootPath = _webHostEnvironment.WebRootPath;
-
-                if (file != null)
+                //* If there is an image in the VM, Delete it
+                if (productVM.Product.Img != null)
                 {
-                    string filename = Guid.NewGuid().ToString();
-                    var Upload = Path.Combine(RootPath, @"Images\Products");
-                    var ext = Path.GetExtension(file.FileName);
-
-                    if (productVM.Product.Img != null)
-                    {
-                        var oldimg = Path.Combine(RootPath, productVM.Product.Img.TrimStart('\\'));
-
-                        if (System.IO.File.Exists(oldimg))
-                        {
-                            System.IO.File.Delete(oldimg);
-                        }
-                    }
-
-                    using (var filestream = new FileStream(Path.Combine(Upload, filename + ext), FileMode.Create))
-                    {
-                        file.CopyTo(filestream);
-                    }
-
-                    productVM.Product.Img = @"Images\Products\" + filename + ext;
+                    var imgPath = productVM.Product.Img;
+                    _fileService.DeleteFile(imgPath);
                 }
 
+                //* Uploading the new Image
+                var validImage = _fileService.ValidateImage(file);
+                if (validImage.isValid)
+                {
+                    string fileWithExtension = _fileService.UploadFile(file, @"Images\Products");
+                    if (fileWithExtension != "")
+                        productVM.Product.Img = @"Images\Products\" + fileWithExtension;
+                }
+                else
+                {
+                    ModelState.AddModelError("", validImage.errorMessage);
+                }
+
+                //* Updating the New Product Details
                 bool isUpdated = _productManagement.UpsertProduct(productVM.Product);
                 if (isUpdated)
                 {
@@ -163,15 +173,12 @@ namespace myshop.Web.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while Deleting" });
             }
 
-            //! NOT FINISHED
+            // // ! NOT FINISHED
             bool isDeleted = _productManagement.DeleteProduct(id);
 
-            var oldimg = Path.Combine(_webHostEnvironment.WebRootPath, productIndb.Img.TrimStart('\\'));
-
-            if (System.IO.File.Exists(oldimg))
-            {
-                System.IO.File.Delete(oldimg);
-            }
+            //* Deleting the Image 
+            var imgPath = productIndb.Img;
+            _fileService.DeleteFile(imgPath);
 
             return Json(new { success = true, message = "file has been Deleted" });
         }

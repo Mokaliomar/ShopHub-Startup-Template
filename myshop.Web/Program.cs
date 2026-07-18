@@ -10,6 +10,8 @@ using DataAccess.Repositories.Implementations;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
+using BusinessLogic.Services.Implementation;
+using BusinessLogic.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,7 @@ builder.Services.AddScoped<ProductManagement>();
 // builder.Services.AddScoped<IProductRepository, ProductRepository>();
 // builder.Services.AddScoped<ICategoryRepository, ICategoryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IFileService, LocalFileService>();
 
 //* Session
 builder.Services.AddHttpContextAccessor();
