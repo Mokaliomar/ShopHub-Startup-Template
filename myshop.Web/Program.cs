@@ -41,6 +41,7 @@ builder.Services.AddScoped<ProductManagement>();
 // builder.Services.AddScoped<ICategoryRepository, ICategoryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IFileService, LocalFileService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 //* Session
 builder.Services.AddHttpContextAccessor();

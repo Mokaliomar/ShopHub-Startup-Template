@@ -60,7 +60,7 @@ namespace myshop.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM, IFormFile file)
+        public IActionResult Create(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -131,17 +131,17 @@ namespace myshop.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                //* If there is an image in the VM, Delete it
-                if (productVM.Product.Img != null)
-                {
-                    var imgPath = productVM.Product.Img;
-                    _fileService.DeleteFile(imgPath);
-                }
-
                 //* Uploading the new Image
                 var validImage = _fileService.ValidateImage(file);
                 if (validImage.isValid)
                 {
+                    //* If there is an image in the VM, Delete it
+                    if (productVM.Product.Img != null)
+                    {
+                        var imgPath = productVM.Product.Img;
+                        _fileService.DeleteFile(imgPath);
+                    }
+                    
                     string fileWithExtension = _fileService.UploadFile(file, @"Images\Products");
                     if (fileWithExtension != "")
                         productVM.Product.Img = @"Images\Products\" + fileWithExtension;

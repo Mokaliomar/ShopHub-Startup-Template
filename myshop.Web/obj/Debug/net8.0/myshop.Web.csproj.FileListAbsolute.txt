@@ -1135,3 +1135,5 @@ C:\Projects\Demo Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net8.0\D
 C:\Projects\Demo Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net8.0\BusinessLogic.pdb
 C:\Projects\Demo Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net8.0\DataAccess.pdb
 C:\Projects\Demo Projects\ShopHub-Startup-Template\myshop.Web\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Projects\Demo Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net8.0\Mapster.dll
+C:\Projects\Demo Projects\ShopHub-Startup-Template\myshop.Web\bin\Debug\net8.0\Mapster.Core.dll
