@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
 using BusinessLogic.Services.Implementation;
 using BusinessLogic.Services.Interfaces;
+using BusinessLogic.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +50,8 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
 
+//* Mapster Configurations
+MapsterConfig.RegisterConfig();
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

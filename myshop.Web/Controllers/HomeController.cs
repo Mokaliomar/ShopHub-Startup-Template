@@ -1,5 +1,7 @@
 using BusinessLogic.BL;
+using BusinessLogic.DTOs;
 using DataAccess.Repositories.Interfaces;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using myshop.Entities.ViewModels;
 using myshop.Web.ViewModels;
@@ -14,9 +16,9 @@ namespace myshop.Web.Controllers
             _productManagement = productManagement;
         }
         // GET: HomeController
-        public IActionResult Index()
+        public IActionResult Index(string? searchTerm, string? sortingTerm, int pageNumber = 1)
         {
-            var productsWithCategories = _productManagement.GetProductsWithCategories();
+            /* var productsWithCategories = _productManagement.GetProductsWithCategories();
             IEnumerable<ProductShopIndexVM> product = productsWithCategories.Select(x => new ProductShopIndexVM
             {
                 Id = x.Id,
@@ -25,9 +27,11 @@ namespace myshop.Web.Controllers
                 Name = x.Name,
                 Description = x.Description,
                 Price = x.Price,
-            });
+            }); */
+            var productListDto = _productManagement.GetPaginatedProducts(searchTerm, sortingTerm, pageNumber, 2);
+            var productListVM = productListDto.Adapt<ProductListVM>();
 
-            return View(product);
+            return View(productListVM);
         }
 
         public IActionResult Details(int? id)
