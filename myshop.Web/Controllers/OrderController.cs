@@ -42,7 +42,8 @@ namespace myshop.Web.Controllers
 
             SaveShoppingCartToSession(shoppingCart);
 
-            return RedirectToAction(nameof(Cart));
+            return RedirectToAction("Index", "Home");
+            // return RedirectToAction(nameof(Cart));
         }
 
         public IActionResult QuantityPlus(int productId)
@@ -118,7 +119,7 @@ namespace myshop.Web.Controllers
         public IActionResult ClearCart()
         {
             var shoppingCart = GetShoppingCart()!;
-            
+
             // Mapping the Objects
             var shoppingCartDto = shoppingCart.Adapt<ShoppingCartDto>();
             shoppingCartDto = _cartService.ClearCart(shoppingCartDto);

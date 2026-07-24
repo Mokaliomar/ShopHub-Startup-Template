@@ -1,4 +1,5 @@
-﻿@model ShoppingCartVM
+﻿@using Microsoft.IdentityModel.Tokens
+@model ShoppingCartVM
 
 @{
     ViewData["Title"] = "Shopping Cart - ShopHub";
@@ -204,159 +205,184 @@
 </style>
 
 <div class="cart-page">
-    <div class="shop-header">
+    @* <div class="shop-header">
         <h2><i class="fa-solid fa-cart-shopping me-2"></i>Shopping Cart</h2>
+    </div> *@
+    <div class="shop-header d-flex align-items-center justify-content-between p-3 mb-4 rounded-3"
+         style="background: #f1f5fb; border: 1px solid #d0d7de;">
+
+        @if (!Model.CartItems.IsNullOrEmpty())
+        {
+            <!-- زرار العودة للمتجر (Back / Continue Shopping) -->
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary btn-sm rounded-2 fw-semibold px-3">
+                <i class="fa-solid fa-arrow-left me-1"></i> Continue Shopping
+            </a>
+        }
+
+        <!-- العنوان الرئيسي في النص -->
+        <h2 class="m-0 fs-4 fw-bold text-center text-primary-dark">
+            <i class="fa-solid fa-cart-shopping me-2"></i> Shopping Cart
+        </h2>
+
+        <!-- عنصر وهمي فارغ فقط لضبط السنترة بالضبط لو حابب -->
+        <div style="width: 140px;" class="d-none d-md-block"></div>
+
     </div>
 
-@if (Model != null && Model.CartItems.Any())
-{
-    <div class="row g-4">
-        <!-- Items List -->
-        <div class="col-lg-8">
-            <div class="cart-panel">
-                <div class="p-0">
-                    <div class="table-responsive">
-                        <table class="table cart-table mb-0">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="ps-4">Product</th>
-                                    <th scope="col" class="text-center">Price</th>
-                                    <th scope="col" class="text-center">Quantity</th>
-                                    <th scope="col" class="text-center">Total</th>
-                                    <th scope="col" class="pe-4 text-end">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.CartItems)
-                                {
+    @if (Model != null && Model.CartItems.Any())
+    {
+        <div class="row g-4">
+            <!-- Items List -->
+            <div class="col-lg-8">
+                <div class="cart-panel">
+                    <div class="p-0">
+                        <div class="table-responsive">
+                            <table class="table cart-table mb-0">
+                                <thead>
                                     <tr>
-                                        <!-- Product Info -->
-                                        <td class="ps-4 py-3">
-                                            <div class="d-flex align-items-center gap-3">
-                                                @if (!string.IsNullOrEmpty(item.Img))
-                                                {
-                                                      <img src="~/@item.Img" class="cart-product-image" alt="@item.Name" />
-                                                }
-                                                else
-                                                {
-                                                      <img src="~/images/default-product.png" class="cart-product-image" alt="No Image" />
-                                                }
-                                                <div>
-                                                    <h6 class="cart-product-name">@item.Name</h6>
-                                                    <small class="text-muted d-block">Product Code: #@item.Id</small>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <!-- Price -->
-                                        <td class="text-center cart-price">
-                                            @item.Price.ToString("C2")
-                                        </td>
-
-                                        <!-- Quantity Controls (+ / -) -->
-                                        <td class="text-center">
-                                            <div class="quantity-control">
-                                                <!-- Minus Button -->
-                                                <a asp-action="QuantityMinus" asp-route-productId="@item.Id"
-                                                   class="quantity-button" title="Decrease quantity"
-                                                   aria-label="Decrease quantity">
-                                                    <i class="fa-solid fa-minus"></i>
-                                                </a>
-
-                                                <!-- Quantity Value -->
-                                                <span class="quantity-value">@item.Quantity</span>
-
-                                                <!-- Plus Button -->
-                                                <a asp-action="QuantityPlus" asp-route-productId="@item.Id"
-                                                   class="quantity-button" title="Increase quantity"
-                                                   aria-label="Increase quantity">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-
-                                        <!-- Line Total -->
-                                        <td class="text-center cart-total">
-                                            @((item.Price * item.Quantity).ToString("C2"))
-                                        </td>
-
-                                        <!-- Remove Action -->
-                                        <td class="pe-4 text-end">
-                                            <a asp-action="RemoveItem" asp-route-productId="@item.Id"
-                                               class="btn btn-outline-danger btn-sm clear-button"
-                                               title="Remove item from cart">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </a>
-                                        </td>
+                                        <th scope="col" class="ps-4">Product</th>
+                                        <th scope="col" class="text-center">Price</th>
+                                        <th scope="col" class="text-center">Quantity</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="pe-4 text-end">Action</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.CartItems)
+                                    {
+                                        <tr>
+                                            <!-- Product Info -->
+                                            <td class="ps-4 py-3">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    @if (!string.IsNullOrEmpty(item.Img))
+                                                    {
+                                                        <img src="~/@item.Img" class="cart-product-image" alt="@item.Name" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/images/default-product.png" class="cart-product-image"
+                                                             alt="No Image" />
+                                                    }
+                                                    <div>
+                                                        <h6 class="cart-product-name">@item.Name</h6>
+                                                        <small class="text-muted d-block">Product Code: #@item.Id</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <!-- Price -->
+                                            <td class="text-center cart-price">
+                                                @item.Price.ToString("C2")
+                                            </td>
+
+                                            <!-- Quantity Controls (+ / -) -->
+                                            <td class="text-center">
+                                                <div class="quantity-control">
+                                                    <!-- Minus Button -->
+                                                    <a asp-action="QuantityMinus" asp-route-productId="@item.Id"
+                                                       class="quantity-button" title="Decrease quantity"
+                                                       aria-label="Decrease quantity">
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </a>
+
+                                                    <!-- Quantity Value -->
+                                                    <span class="quantity-value">@item.Quantity</span>
+
+                                                    <!-- Plus Button -->
+                                                    <a asp-action="QuantityPlus" asp-route-productId="@item.Id"
+                                                       class="quantity-button" title="Increase quantity"
+                                                       aria-label="Increase quantity">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+
+                                            <!-- Line Total -->
+                                            <td class="text-center cart-total">
+                                                @((item.Price * item.Quantity).ToString("C2"))
+                                            </td>
+
+                                            <!-- Remove Action -->
+                                            <td class="pe-4 text-end">
+                                                <a asp-action="RemoveItem" asp-route-productId="@item.Id"
+                                                   class="btn btn-outline-danger btn-sm clear-button"
+                                                   title="Remove item from cart">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </a>
+                                                <!-- زرار إكمال التسوق تحت الجدول -->
+                                                @* <a asp-controller="Home" asp-action="Index"
+                                                   class="btn btn-link text-decoration-none text-secondary fw-semibold">
+                                                    <i class="fa-solid fa-cart-plus me-1"></i> Add More Products
+                                                </a> *@
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Bulk Actions -->
-            <div class="d-flex justify-content-between mt-3">
-                <a asp-action="ClearCart" class="btn btn-outline-danger btn-sm clear-button px-3">
-                    <i class="fa-solid fa-circle-xmark me-1"></i> Clear Cart
-                </a>
-            </div>
-        </div>
-
-        <!-- Order Summary Sidebar -->
-        <div class="col-lg-4">
-            <div class="cart-panel">
-                <div class="summary-panel">
-                    <h5 class="summary-title mb-4">Order Summary</h5>
-
-                    <div class="d-flex justify-content-between mb-3 summary-label">
-                        <span>Items Count</span>
-                        <span class="fw-semibold">@Model.CartItems.Sum(i => i.Quantity) pcs</span>
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-3 summary-label">
-                        <span>Subtotal</span>
-                        <span class="fw-semibold">@Model.CartItems.Sum(i => i.Price * i.Quantity).ToString("C2")</span>
-                    </div>
-
-                    <div class="d-flex justify-content-between mb-3 summary-label">
-                        <span>Shipping & Delivery</span>
-                        <span class="text-success fw-semibold">Free (Grand Opening Offer)</span>
-                    </div>
-
-                    <hr class="my-4 text-slate-200">
-
-                    <div class="d-flex justify-content-between mb-4">
-                        <span class="fs-5 fw-bold" style="color: #1e3a8a;">Grand Total</span>
-                        <span class="fs-5 fw-bold cart-total">@Model.Total.ToString("C2")</span>
-                    </div>
-
-                    <a asp-area="Customer" asp-controller="Cart" asp-action="Summary"
-                       class="checkout-button">
-                        <i class="fa-solid fa-credit-card me-2"></i> Proceed to Checkout
+                <!-- Bulk Actions -->
+                <div class="d-flex justify-content-between mt-3">
+                    <a asp-action="ClearCart" class="btn btn-outline-danger btn-sm clear-button px-3">
+                        <i class="fa-solid fa-circle-xmark me-1"></i> Clear Cart
                     </a>
                 </div>
             </div>
 
-            <div class="text-center mt-3 text-muted">
-                <small><i class="fa-solid fa-shield-halved me-1"></i> 100% Secure Checkout & Cash on Delivery</small>
+            <!-- Order Summary Sidebar -->
+            <div class="col-lg-4">
+                <div class="cart-panel">
+                    <div class="summary-panel">
+                        <h5 class="summary-title mb-4">Order Summary</h5>
+
+                        <div class="d-flex justify-content-between mb-3 summary-label">
+                            <span>Items Count</span>
+                            <span class="fw-semibold">@Model.CartItems.Sum(i => i.Quantity) pcs</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 summary-label">
+                            <span>Subtotal</span>
+                            <span class="fw-semibold">@Model.CartItems.Sum(i => i.Price * i.Quantity).ToString("C2")</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3 summary-label">
+                            <span>Shipping & Delivery</span>
+                            <span class="text-success fw-semibold">Free (Grand Opening Offer)</span>
+                        </div>
+
+                        <hr class="my-4 text-slate-200">
+
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="fs-5 fw-bold" style="color: #1e3a8a;">Grand Total</span>
+                            <span class="fs-5 fw-bold cart-total">@Model.Total.ToString("C2")</span>
+                        </div>
+
+                        <a asp-area="Customer" asp-controller="Cart" asp-action="Summary" class="checkout-button">
+                            <i class="fa-solid fa-credit-card me-2"></i> Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3 text-muted">
+                    <small><i class="fa-solid fa-shield-halved me-1"></i> 100% Secure Checkout & Cash on Delivery</small>
+                </div>
             </div>
         </div>
-    </div>
-}
-else
-{
-    <!-- Empty Cart State -->
-    <div class="empty-cart">
-        <div class="mb-4 empty-cart-icon">
-            <i class="fa-solid fa-cart-shopping"></i>
+    }
+    else
+    {
+        <!-- Empty Cart State -->
+        <div class="empty-cart">
+            <div class="mb-4 empty-cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </div>
+            <h3>Your Cart is Currently Empty!</h3>
+            <p class="text-muted mb-4">It looks like you haven't added any products to your cart yet.</p>
+            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="continue-button">
+                Start Shopping Now <i class="fa-solid fa-arrow-right ms-1"></i>
+            </a>
         </div>
-        <h3>Your Cart is Currently Empty!</h3>
-        <p class="text-muted mb-4">It looks like you haven't added any products to your cart yet.</p>
-        <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="continue-button">
-            Start Shopping Now <i class="fa-solid fa-arrow-right ms-1"></i>
-        </a>
-    </div>
-}
+    }
 </div>

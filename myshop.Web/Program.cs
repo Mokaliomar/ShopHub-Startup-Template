@@ -23,17 +23,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
+//* Identity Registration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     options => options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4)
     ).AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+//* Cookies Configurations
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/Login";
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
 });
+
+//* MemoryCache Registration
+builder.Services.AddMemoryCache();
 
 //* Services (Managements)
 builder.Services.AddScoped<CategoryManagement>();

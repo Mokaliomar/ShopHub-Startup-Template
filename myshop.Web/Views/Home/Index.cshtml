@@ -208,11 +208,39 @@
         background: #f1f5fb;
         border: 1px solid #d0d7de;
         border-radius: 14px;
-        padding: 20px;
+        padding: 15px 25px;
         margin-top: 30px;
         margin-bottom: 25px;
-        text-align: center;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+        /* 🟢 التعديل الجوهري للتحكم في الأماكن */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    /* زر السلة الشيك */
+    .btn-cart-header {
+        background-color: #1e40af;
+        color: #ffffff;
+        padding: 9px 18px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 10px rgba(30, 64, 175, 0.2);
+    }
+
+    .btn-cart-header:hover {
+        background-color: #1e3a8a;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(30, 64, 175, 0.3);
     }
 
     .shop-header h2 {
@@ -231,14 +259,16 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
-    .form-control-custom, .form-select-custom {
+    .form-control-custom,
+    .form-select-custom {
         border-radius: 8px;
         border: 1px solid #cbd5e1;
         padding: 10px 14px;
         font-size: 0.95rem;
     }
 
-    .form-control-custom:focus, .form-select-custom:focus {
+    .form-control-custom:focus,
+    .form-select-custom:focus {
         border-color: #1e40af;
         box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
     }
@@ -381,6 +411,11 @@
     <!-- Header -->
     <div class="shop-header">
         <h2><i class="fa-solid fa-store me-2"></i> @ViewBag.CardTitle</h2>
+        <!-- زر السلة المضاف في السهم الأحمر -->
+        <a asp-controller="Order" asp-action="Cart" class="btn-cart-header">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>My Cart</span>
+        </a>
     </div>
 
     <!-- ================================================================= -->
@@ -388,17 +423,15 @@
     <!-- ================================================================= -->
     <div class="filter-bar">
         <form asp-action="Index" method="get" class="row g-3 align-items-center">
-            
+
             <!-- 1. Search Box (مربع البحث عن منتج) -->
             <div class="col-12 col-md-5">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end-0 text-muted" style="border-radius: 8px 0 0 8px;">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </span>
-                    <input type="text" 
-                           name="searchTerm" 
-                           value="@Model?.SearchTerm" 
-                           class="form-control form-control-custom border-start-0" 
+                    <input type="text" name="searchTerm" value="@Model?.SearchTerm"
+                           class="form-control form-control-custom border-start-0"
                            placeholder="Search by product name or description..." />
                 </div>
             </div>
@@ -413,21 +446,25 @@
                         <option value="">Default (Name A-Z)</option>
                         <option value="NameAsc" selected="@(Model?.SortingTerm == "NameAsc")">Name (A-Z)</option>
                         <option value="NameDesc" selected="@(Model?.SortingTerm == "NameDesc")">Name (Z-A)</option>
-                        <option value="PriceAsc" selected="@(Model?.SortingTerm == "PriceAsc")">Price (Low to High)</option>
-                        <option value="PriceDesc" selected="@(Model?.SortingTerm == "PriceDesc")">Price (High to Low)</option>
+                        <option value="PriceAsc" selected="@(Model?.SortingTerm == "PriceAsc")">Price (Low to High)
+                        </option>
+                        <option value="PriceDesc" selected="@(Model?.SortingTerm == "PriceDesc")">Price (High to Low)
+                        </option>
                     </select>
                 </div>
             </div>
 
             <!-- 3. Actions (زر البحث وزر إزالة الفلترة) -->
             <div class="col-12 col-sm-6 col-md-3 d-flex gap-2 justify-content-end">
-                <button type="submit" class="btn btn-primary w-100 fw-semibold" style="border-radius: 8px; background-color: #1e40af;">
+                <button type="submit" class="btn btn-primary w-100 fw-semibold"
+                        style="border-radius: 8px; background-color: #1e40af;">
                     <i class="fa-solid fa-filter me-1"></i> Apply
                 </button>
-                
+
                 @if (!string.IsNullOrEmpty(Model?.SearchTerm) || !string.IsNullOrEmpty(Model?.SortingTerm))
                 {
-                    <a asp-action="Index" class="btn btn-outline-secondary" title="Clear Filters" style="border-radius: 8px;">
+                    <a asp-action="Index" class="btn btn-outline-secondary" title="Clear Filters"
+                       style="border-radius: 8px;">
                         <i class="fa-solid fa-xmark"></i>
                     </a>
                 }
@@ -501,23 +538,21 @@
     @if (Model != null && Model.TotalPages >= 1)
     {
         <div class="d-flex justify-content-between align-items-center mt-5 pt-3 border-top">
-            
+
             <!-- نص توضيحي لرقم الصفحة الحالية -->
             <div class="text-muted small fw-semibold">
-                Showing Page <span class="text-dark font-bold">@Model.PageIndex</span> of <span class="text-dark font-bold">@Model.TotalPages</span>
+                Showing Page <span class="text-dark font-bold">@Model.PageIndex</span> of <span
+                class="text-dark font-bold">@Model.TotalPages</span>
             </div>
 
             <!-- أزرار التنقل بين الصفحات -->
             <nav aria-label="Product Pages Navigation">
                 <ul class="pagination pagination-custom mb-0">
-                    
+
                     <!-- زر الصفحة السابقة (Previous) -->
                     <li class="page-item @(!Model.HasPreviousPage ? "disabled" : "")">
-                        <a class="page-item-link page-link" 
-                           asp-action="Index" 
-                           asp-route-pageNumber="@(Model.PageIndex - 1)"
-                           asp-route-searchTerm="@Model.SearchTerm"
-                           asp-route-sortingTerm="@Model.SortingTerm">
+                        <a class="page-item-link page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)"
+                           asp-route-searchTerm="@Model.SearchTerm" asp-route-sortingTerm="@Model.SortingTerm">
                             <i class="fa-solid fa-chevron-left me-1"></i> Prev
                         </a>
                     </li>
@@ -526,11 +561,8 @@
                     @for (int i = 1; i <= Model.TotalPages; i++)
                     {
                         <li class="page-item @(i == Model.PageIndex ? "active" : "")">
-                            <a class="page-link" 
-                               asp-action="Index" 
-                               asp-route-pageNumber="@i"
-                               asp-route-searchTerm="@Model.SearchTerm"
-                               asp-route-sortingTerm="@Model.SortingTerm">
+                            <a class="page-link" asp-action="Index" asp-route-pageNumber="@i"
+                               asp-route-searchTerm="@Model.SearchTerm" asp-route-sortingTerm="@Model.SortingTerm">
                                 @i
                             </a>
                         </li>
@@ -538,11 +570,8 @@
 
                     <!-- زر الصفحة التالية (Next) -->
                     <li class="page-item @(!Model.HasNextPage ? "disabled" : "")">
-                        <a class="page-link" 
-                           asp-action="Index" 
-                           asp-route-pageNumber="@(Model.PageIndex + 1)"
-                           asp-route-searchTerm="@Model.SearchTerm"
-                           asp-route-sortingTerm="@Model.SortingTerm">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)"
+                           asp-route-searchTerm="@Model.SearchTerm" asp-route-sortingTerm="@Model.SortingTerm">
                             Next <i class="fa-solid fa-chevron-right ms-1"></i>
                         </a>
                     </li>
