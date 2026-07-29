@@ -1,0 +1,214 @@
+﻿@using System.Collections.Immutable
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewBag.PageTitle = "User Management";
+    ViewBag.CardTitle = "All Users";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+@model IEnumerable<UserVM>
+@inject UserManager<ApplicationUser> _userManager;
+@inject RoleManager<IdentityRole> _roleManager;
+
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    /* Card */
+    .custom-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        padding: 24px;
+    }
+
+    .custom-card-header {
+        background: #f1f5fb;
+        border-bottom: 1px solid #d0d7de;
+        padding: 16px 20px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .custom-card-header h4 {
+        color: #1e3a8a;
+        /* أزرق فخم */
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    /* Table */
+    .table-custom {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 8px;
+    }
+
+    .table-custom th {
+        background-color: #1e40af;
+        color: white;
+        font-weight: 600;
+        padding: 14px 16px;
+        text-align: left;
+    }
+
+    .table-custom th:first-child {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    .table-custom th:last-child {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .table-custom td {
+        background-color: #fefefe;
+        padding: 14px 16px;
+        color: #1e3a8a;
+        vertical-align: middle;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .table-custom tr td:first-child {
+        border-left: 1px solid #e2e8f0;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    .table-custom tr td:last-child {
+        border-right: 1px solid #e2e8f0;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+
+    .table-custom tr:hover td {
+        background-color: #f0f5ff;
+        transition: 0.2s;
+    }
+
+    /* Badges & Avatars */
+    .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #1e40af;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 10px;
+    }
+
+    .badge-role {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-admin {
+        background-color: #dbeafe;
+        color: #1e40af;
+    }
+
+    .badge-user {
+        background-color: #f1f5f9;
+        color: #475569;
+    }
+
+    /* Buttons */
+    .btn-action {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        border: none;
+        font-size: 0.88rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .btn-manage-role {
+        background-color: #1e40af;
+        color: white;
+        box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
+    }
+
+    .btn-manage-role:hover {
+        background-color: #1e3a8a;
+        color: white;
+    }
+
+    .btn-lock {
+        background-color: #dc2626;
+        color: white;
+        box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+    }
+
+    .btn-lock:hover {
+        background-color: #b91c1c;
+        color: white;
+    }
+</style>
+
+<div class="custom-card">
+
+    <div class="custom-card-header">
+        <h4><i class="fa-solid fa-users me-2"></i> @ViewBag.CardTitle</h4>
+        @* <span class="badge bg-primary px-3 py-2">Total Users: </span> *@
+    </div>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="user-avatar" style="@(user.Role == "Customer" ? "background-color: #475569;" : "")">@user.Username[0]</div>
+                            <strong>@user.Username</strong>
+                        </div>
+                    </td>
+                    <td>@user.Email</td>
+                    @if (user.Role == "Admin")
+                    {
+                        <td><span class="badge-role badge-admin"><i class="fa-solid fa-user-shield me-1"></i> Admin</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td><span class="badge-role badge-user"><i class="fa-solid fa-user me-1"></i> Customer</span></td>
+                    }
+                    <td>
+                        <a class="btn-action btn-manage-role me-1" href="#">
+                            <i class="fa-solid fa-user-gear"></i> Manage Roles
+                        </a>
+                        <a class="btn-action btn-lock" href="#">
+                            <i class="fa-solid fa-user-slash"></i> Lock
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+</div>

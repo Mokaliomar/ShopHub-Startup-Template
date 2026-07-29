@@ -9,7 +9,7 @@ public static class MemoryCacheConfig
     {
         var cacheEntryConfig = new MemoryCacheEntryOptions()
             .SetSlidingExpiration(TimeSpan.FromSeconds(45))
-            .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+            .SetAbsoluteExpiration(TimeSpan.FromMinutes(30))
             .SetPriority(CacheItemPriority.Normal);
 
         return cacheEntryConfig;

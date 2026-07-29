@@ -109,6 +109,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\User\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Order\" />
     <Folder Include="wwwroot\Images\Products\" />
