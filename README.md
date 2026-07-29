@@ -2,38 +2,48 @@
 
 A clean ASP.NET Core MVC startup template designed for students to build E-Commerce projects using the Repository Pattern and Entity Framework Core.
 
-## Features
+## 🎀 Features
 
 - ASP.NET Core MVC
 - Entity Framework Core
-- Repository Pattern
+- Repository Pattern & Unit Of Work (UoW)
+- File Upload
 - SQL Server Integration
+- CRUD Operations
 - Identity Authentication
 - Bootstrap UI
 - AdminLTE Dashboard
 - DataTables Integration
+- Clean Architecture _(Web Application, Data Access, Business Logic)_
 - Toastr Notifications
+- TempData Notifications
 - File Upload Support
 - Session Configuration
-<!-- - SweetAlert2 -->
-<!-- - TinyMCE Support (Optional) -->
+- Admin & Customer Separated Views
+- Dependency Injection
 
-## Included Modules
+## 🪶 Included Modules
 
-### Category
-- Create Category ✅
-- View Categories ✅
-- Edit Category ✅
-- Delete Category ✅
+### Category ✅
 
-### Product
-- Create Product ✅
-- Upload Product Image ✅
-- View Products ✅
-- Edit Product ✅
-- Delete Product ✅
+- Create Category
+- View Categories
+- Edit Category
+- Delete Category
 
-## Project Structure
+### Product ✅
+
+- Create Product
+- Upload Product Image
+- View Products
+- Edit Product
+- Delete Product
+
+### User Management ✅
+
+- View All Users & Roles
+
+## 🏗️ Project Structure
 
 ```
 BusinessLogic/
@@ -42,6 +52,8 @@ BusinessLogic/
 
 DataAccess/
     Data/
+        ApplicationDbContext.cs
+        SeedData.cs
     Migrations/
     Models/
     Repositories/
@@ -57,10 +69,12 @@ myshop.Web/
     Controllers/
     Views/
     ViewModels/
+    Utilities/
+        FileHelper.cs
     wwwroot/
 ```
 
-## Technologies
+## 💻 Technologies
 
 - ASP.NET Core MVC
 - Entity Framework Core
@@ -71,7 +85,7 @@ myshop.Web/
 - jQuery
 - DataTables
 
-## Database ✅
+## 📊 Database
 
 Update the connection string inside:
 
@@ -90,16 +104,6 @@ or
 ```bash
 dotnet ef database update
 ```
-
-## Default Features
-
-- Repository Pattern
-- Dependency Injection
-- CRUD Operations
-- File Upload
-- Entity Relationships
-- ViewModels
-- TempData Notifications
 
 <!-- ## Notes
 
@@ -121,42 +125,58 @@ Educational Use Only. -->
 
 To test the application's different roles and functionalities, you can use the following pre-configured accounts:
 
-| Role | Email | Password |
-| :--- | :--- | :--- |
-| **Admin** | OmarAdmin@gmail.com | OmarAdmin12345# |
+| Role                | Email                 | Password              |
+| :------------------ | :-------------------- | :-------------------- |
+| **Admin**           | OmarAdmin@gmail.com   | OmarAdmin12345#       |
 | **Customer / User** | OmarMohamed@yahoo.com | OmarMohamed200512345# |
 
 > **Note:** Make sure you have executed the database migrations or database script before attempting to log in with these credentials.
 
+## 📸 Project Screens
 
-## Project Screens
+<details>
+  <summary><b>🛍️ Customer Interface (Click to expand)</b></summary>
+  <br>
+
 ### Login / Register Screens
+
 ![Login Screen](./Docs/Screenshots/Login%20Screen.png)
 ![Register Screen](./Docs/Screenshots/Register%20Screen.png)
 
 ### Customer Home Page
+
 ![Customer Home Page](./Docs/Screenshots/User%20Home%20Page%20Screen.png)
 
 ### Customer View Product Details
+
 ![View Product Details](./Docs/Screenshots/Product%20Details%20Screen.png)
 
-### Admin View Product Dashboard
+### Customer Shopping Cart
+
+![Customer Empty Shopping Cart](./Docs/Screenshots/Empty%20Shopping%20Cart%20Screen.png)
+![Customer Shopping Cart](./Docs/Screenshots/Shopping%20Cart%20Screen.png)
+
+</details>
+
+<details>
+  <summary><b>⚙️ Admin Dashboard (Click to expand)</b></summary>
+  <br>
+
+### Products Management
+
 ![Admin Product Dashboard](./Docs/Screenshots/Admin%20View%20Product%20Screen.png)
-
-### Admin Create Product
 ![Admin Create Product](./Docs/Screenshots/Admin%20Create%20Product.png)
-
-### Admin Edit Product
 ![Admin Edit Product](./Docs/Screenshots/Admin%20Edit%20Product%20Screen.png)
 
-### Admin View Categories
+### Categories Management
+
 ![Admin View Categories](./Docs/Screenshots/Admin%20View%20Categories%20Screen.png)
-
-### Admin Create Category
 ![Admin Create Category](./Docs/Screenshots/Admin%20Create%20Category%20Screen.png)
-
-### Admin Edit Category
 ![Admin Edit Category](./Docs/Screenshots/Admin%20Edit%20Category%20Screen.png)
-
-### Admin Delete Category
 ![Admin Delete Category](./Docs/Screenshots/Admin%20Delete%20Category%20Screen.png)
+
+### User Management
+
+![Admin User Management](./Docs/Screenshots/Admin%20User%20Control.png)
+
+</details>
