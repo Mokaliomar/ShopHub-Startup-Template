@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260729093511_SeedMoreProducts")]
+    partial class SeedMoreProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,7 +232,7 @@ namespace DataAccess.Migrations
                             Id = 6,
                             CategoryId = 1,
                             Description = "AMD Ryzen 7, RTX 4060, 16GB RAM, 1TB SSD, 165Hz Display.",
-                            Img = "Images/Products/6e4d4b55-22b1-4358-834f-2cecc6123b3c.jpg",
+                            Img = "Images/Products/default-laptop.png",
                             Name = "Lenovo Legion Pro 5",
                             Price = 1399.99m
                         },
@@ -238,7 +241,7 @@ namespace DataAccess.Migrations
                             Id = 7,
                             CategoryId = 1,
                             Description = "Intel Core Ultra 7, 16GB RAM, 1TB SSD, Touch OLED Screen.",
-                            Img = "Images/Products/87789d13-f31e-4bbd-9343-a5ad90396fad.webp",
+                            Img = "Images/Products/default-laptop.png",
                             Name = "HP Spectre x360",
                             Price = 1549.50m
                         },
@@ -247,7 +250,7 @@ namespace DataAccess.Migrations
                             Id = 8,
                             CategoryId = 1,
                             Description = "AMD Ryzen 9, RTX 4070, 32GB RAM, 1TB NVMe SSD.",
-                            Img = "Images/Products/ac682fc5-fad4-485e-a800-a2a2893fa8ab.jpg",
+                            Img = "Images/Products/default-laptop.png",
                             Name = "ASUS ROG Zephyrus G14",
                             Price = 1899.00m
                         },

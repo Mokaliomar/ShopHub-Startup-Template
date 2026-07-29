@@ -28,7 +28,7 @@ namespace myshop.Web.Controllers
                 Description = x.Description,
                 Price = x.Price,
             }); */
-            var productListDto = _productManagement.GetPaginatedProducts(searchTerm, sortingTerm, pageNumber, 2);
+            var productListDto = _productManagement.GetPaginatedProducts(searchTerm, sortingTerm, pageNumber, 8);
             var productListVM = productListDto.Adapt<ProductListVM>();
 
             return View(productListVM);
