@@ -1,4 +1,4 @@
-# ShopHub Startup
+# ShopHub Project
 
 A clean ASP.NET Core MVC startup template designed for students to build E-Commerce projects using the Repository Pattern and Entity Framework Core.
 
@@ -6,21 +6,26 @@ A clean ASP.NET Core MVC startup template designed for students to build E-Comme
 
 - ASP.NET Core MVC
 - Entity Framework Core
-- Repository Pattern & Unit Of Work (UoW)
-- File Upload
+- Repository Pattern _(+Generic Repository)_ & Unit Of Work (UoW)
+- File Management
 - SQL Server Integration
 - CRUD Operations
-- Identity Authentication
+- Identity Authentication & Authorization
 - Bootstrap UI
 - AdminLTE Dashboard
 - DataTables Integration
 - Clean Architecture _(Web Application, Data Access, Business Logic)_
 - Toastr Notifications
 - TempData Notifications
-- File Upload Support
 - Session Configuration
 - Admin & Customer Separated Views
 - Dependency Injection
+
+## 🚀 Technical Highlights & Best Practices
+
+- **Performance Optimization:** Applied `IMemoryCache` to reduce Database hits for frequently accessed data (e.g., Categories).
+- **Efficient Data Querying:** Implemented Pagination using `IQueryable` deferred execution (`Skip` and `Take`) to fetch only required records from SQL Server.
+- **Decoupled Architecture:** Separation of concerns using Services, ViewModels, and Static Utilities (`FileHelper`).
 
 ## 🪶 Included Modules
 
@@ -42,6 +47,19 @@ A clean ASP.NET Core MVC startup template designed for students to build E-Comme
 ### User Management ✅
 
 - View All Users & Roles
+
+### File Management ✅
+
+- Upload a product image file
+- Delete the product image file
+- Validate the image size _(> 2MB)_
+
+### Shopping Cart ✅
+
+- Add To Cart
+- Increase / Decrease the Product Quantity
+- Remove Product
+- Clear Cart
 
 ## 🏗️ Project Structure
 
