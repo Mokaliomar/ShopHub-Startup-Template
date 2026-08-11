@@ -30,6 +30,23 @@ public class ProductManagement
                    CategoryName = x.Category.Name
                }).ToList();
     }
+    public async Task<IEnumerable<ArchivedProductsDTO>> GetArchivedProducts()
+    {
+        var archivedProductsRaw = await _unitOfWork.ProductRepository
+                                    .GetArchivedProductsAsync();
+        /* .Select(p => new ArchivedProductsDTO
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price,
+            CategoryName = p.Category.Name
+        }); */
+
+        var archivedProducts = archivedProductsRaw.Adapt<IEnumerable<ArchivedProductsDTO>>();
+
+        return archivedProducts;
+    }
 
     public bool UpsertProduct(Product product)
     {
@@ -61,11 +78,49 @@ public class ProductManagement
     {
         try
         {
+            /* Hard Delete
             var product = GetProductWithCategoryById(Id);
             if (product == null)
                 return false;
             _unitOfWork.ProductRepository.Delete(Id);
             _unitOfWork.Save();
+            return true; */
+
+            // Soft Delete
+            var product = GetProductWithCategoryById(Id);
+            if (product == null)
+                return false;
+
+            product.IsDeleted = true;
+            product.DeletedAt = DateTime.UtcNow;
+
+            //* Ensuring that it will be saved in the Change Tracker (to avoid the Untracked entity)
+            _unitOfWork.ProductRepository.Update(product);
+
+            _unitOfWork.Save();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex.Message);
+            return false;
+        }
+    }
+    public async Task<bool> RestoreProductAsync(int? id)
+    {
+        try
+        {
+            var deletedProduct = await _unitOfWork.ProductRepository.GetWithIgnoreFiltersAsync(p => p.Id == id);
+            if (deletedProduct is null)
+                return false;
+
+            deletedProduct.IsDeleted = false;
+
+            _unitOfWork.ProductRepository.Update(deletedProduct);
+
+            _unitOfWork.Save();
+
             return true;
         }
         catch(Exception ex)
@@ -74,22 +129,9 @@ public class ProductManagement
             return false;
         }
     }
-    /* public bool DeleteProduct(Product product)
-    {
-        try
-        {
-            _context.Products.Remove(product);
-            _context.SaveChanges();
-            return true;
-        }
-        catch(Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine(ex.Message);
-            return false;
-        }
-    } */
+
     public Product? GetProductWithCategoryById(int? Id) => _unitOfWork.ProductRepository.GetProductsWithCategories().FirstOrDefault(p => p.Id == Id);
-    
+
     public Product? GetProductById(int? Id) => _unitOfWork.ProductRepository.GetById(Id);
 
     public ProductListDto GetPaginatedProducts(string? searchTerm, string? sortingTerm, int pageNumber = 1, int pageSize = 10)
@@ -98,16 +140,16 @@ public class ProductManagement
 
         var totalItems = query.Count();
         var numberOfPages = (int)Math.Ceiling((float)totalItems / pageSize);
-        
+
         query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-        
+
         /* #region Mapster Configurations
         TypeAdapterConfig<Product, ProductDto>.NewConfig()
             .Map(dest => dest.Image, src => src.Img);
         TypeAdapterConfig<Product, ProductDto>.NewConfig()
             .Map(dest => dest.CategoryName, src => src.Category.Name);
         #endregion */
-        
+
         var products = query.ProjectToType<ProductDto>();
 
         var productListDto = new ProductListDto
@@ -126,7 +168,7 @@ public class ProductManagement
         var query = _unitOfWork.ProductRepository.GetProductsWithCategories().AsQueryable();
 
         //* Searching
-        if(!string.IsNullOrEmpty(searchTerm))
+        if (!string.IsNullOrEmpty(searchTerm))
             query = query.Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm));
 
         //* Sorting
@@ -135,7 +177,7 @@ public class ProductManagement
             case "NameAsc":
                 query = query.OrderBy(p => p.Name);
                 break;
-            
+
             case "NameDesc":
                 query = query.OrderByDescending(p => p.Name);
                 break;
@@ -143,7 +185,7 @@ public class ProductManagement
             case "PriceAsc":
                 query = query.OrderBy(p => p.Price);
                 break;
-            
+
             case "PriceDesc":
                 query = query.OrderByDescending(p => p.Price);
                 break;

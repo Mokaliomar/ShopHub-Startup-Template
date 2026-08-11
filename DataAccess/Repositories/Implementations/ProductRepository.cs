@@ -11,6 +11,11 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     public ProductRepository(ApplicationDbContext context) : base(context)
     {}
 
+    public async Task<IEnumerable<Product>> GetArchivedProductsAsync()
+    {
+        return await dbSet.IgnoreQueryFilters().Where(p => p.IsDeleted == true).Include(p => p.Category).ToListAsync();
+    }
+
     public IEnumerable<Product> GetProductsWithCategories()
     {
         return dbSet.Include(x => x.Category);

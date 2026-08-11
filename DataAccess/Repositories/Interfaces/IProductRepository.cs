@@ -7,4 +7,5 @@ public interface IProductRepository : IGenericRepository<Product>
 {
     IEnumerable<Product> GetProductsWithCategories();
     Product? GetProductWithCategory(int Id);
+    Task<IEnumerable<Product>> GetArchivedProductsAsync();
 }

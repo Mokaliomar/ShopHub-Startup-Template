@@ -7,6 +7,7 @@ using DataAccess.Repositories.Implementations;
 using Microsoft.Extensions.Caching.Memory;
 using BusinessLogic.Configurations;
 using Mapster;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.BL;
 
@@ -25,16 +26,22 @@ public class CategoryManagement
 
     public Category? Find(int? id) => _unitOfWork.CategoryRepository.GetById(id);
 
-    public IEnumerable<Category> GetCategories()
+    public IEnumerable<CategoryDTO> GetCategories()
     {
-        if (_cache.TryGetValue(cacheKey, out IEnumerable<Category>? Categories))
+        if (_cache.TryGetValue(cacheKey, out IEnumerable<CategoryDTO>? Categories))
         {
             return Categories!;
         }
 
-        Categories = _unitOfWork.CategoryRepository.All();
+        Categories = _unitOfWork.CategoryRepository.All().Select(c => new CategoryDTO
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Description = c.Description,
+            CreatedTime = c.CreatedTime.ToString("dd MMM yyyy")
+        });
         _cache.Set(cacheKey, Categories, MemoryCacheConfig.Configuration());
-        
+
         return Categories;
     }
 
@@ -45,10 +52,26 @@ public class CategoryManagement
             var CategoriesLookUp = Categories.Adapt<IEnumerable<CategoryLookUpDto>>();
             return CategoriesLookUp.Select(x => new CategoryLookUpDto { Id = x.Id, Name = x.Name }).ToList();
         } */
-        
+
         var categories = GetCategories();
         // return categories.Select(x => new CategoryLookUpDto { Id = x.Id, Name = x.Name }).ToList();
         return categories.Adapt<IEnumerable<CategoryLookUpDto>>();
+    }
+
+    public Category? GetCategoryById(int? Id) => _unitOfWork.CategoryRepository.GetById(Id);
+
+    public async Task<IEnumerable<ArchivedCategoriesDTO>> GetArchivedCategoriesAsync()
+    {
+        var archivedCategoriesRaw = await _unitOfWork.CategoryRepository.GetArchivedCategories();
+        // var archivedCategories = archivedCategoriesRaw.Adapt<IEnumerable<ArchivedCategoriesDTO>>();
+        var archivedCategories = archivedCategoriesRaw.Select(c => new ArchivedCategoriesDTO
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Description = c.Description,
+            CreatedTime = c.CreatedTime.ToString("dd MMM yyyy")
+        });
+        return archivedCategories;
     }
 
     public bool CreateCategory(Category category)
@@ -89,9 +112,24 @@ public class CategoryManagement
     {
         try
         {
-            // _context.Categories.Where(x => x.Id == id).FirstOrDefault();
-            // var categoryToDelete = _unitOfWork.CategoryRepository.GetById(id);
+            // Hard Delete
+            /* var categoryToDelete = _unitOfWork.CategoryRepository.GetById(id);
+            if (categoryToDelete is null)
+                return false;
             _unitOfWork.CategoryRepository.Delete(id);
+            _unitOfWork.Save(); */
+
+            // Soft Delete
+            var category = _unitOfWork.CategoryRepository.GetById(id);
+            if (category is null)
+                return false;
+
+            category.IsDeleted = true;
+            category.DeletedAt = DateTime.UtcNow;
+
+            //* Ensuring that the Change tracker recognize it !
+            _unitOfWork.CategoryRepository.Update(category);
+
             _unitOfWork.Save();
 
             ClearCache();
@@ -103,7 +141,31 @@ public class CategoryManagement
             return false;
         }
     }
-    public Category? GetCategoryById(int? Id) => _unitOfWork.CategoryRepository.GetById(Id);
+
+    public async Task<bool> RestoreCategoryAsync(int? id)
+    {
+        try
+        {
+            var deletedCategory = await _unitOfWork.CategoryRepository.GetWithIgnoreFiltersAsync(c => c.Id == id);
+            if (deletedCategory is null)
+                return false;
+
+            deletedCategory.IsDeleted = false;
+
+            _unitOfWork.CategoryRepository.Update(deletedCategory);
+
+            _unitOfWork.Save();
+
+            ClearCache();
+
+            return true;
+        }
+        catch(Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Message: {ex.Message}");
+            return false;
+        }
+    }
 
     #region Helper Methods
     private void ClearCache()

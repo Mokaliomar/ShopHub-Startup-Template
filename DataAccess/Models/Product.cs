@@ -24,6 +24,9 @@ namespace DataAccess.Models
         [Required]
         public decimal Price { get; set; }
 
+        public bool IsDeleted { get; set; }
+        public DateTime DeletedAt { get; set; }
+
         [Required]
         [DisplayName("Category")]
         public int CategoryId { get; set; }

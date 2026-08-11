@@ -11,5 +11,9 @@ namespace DataAccess.Models
 
         public string Description { get; set; }
         public DateTime CreatedTime { get; set; } = DateTime.Now;
+
+        public bool IsDeleted { get; set; }
+        public DateTime DeletedAt { get; set; }
+
     }
 }

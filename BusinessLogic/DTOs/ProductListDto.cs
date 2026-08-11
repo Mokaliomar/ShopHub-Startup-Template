@@ -2,6 +2,7 @@ using System;
 
 namespace BusinessLogic.DTOs;
 
+// Used when displaying the Products for the Clients (NOT ADMINS)
 public class ProductListDto
 {
     public IEnumerable<ProductDto> Items { get; set; } = [];

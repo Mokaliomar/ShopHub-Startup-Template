@@ -3,6 +3,7 @@ using DataAccess.Data;
 using DataAccess.Models;
 using BusinessLogic.BL;
 using Microsoft.AspNetCore.Authorization;
+using Mapster;
 
 // namespace myshop.Web.Areas.Admin.Controllers
 namespace myshop.Web.Areas.Admin.Controllers
@@ -21,9 +22,40 @@ namespace myshop.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var categories = _categoryManagement.GetCategories().ToList();
-            return View(categories);
+            /* var categories = _categoryManagement.GetCategories().ToList();
+            return View(categories); */
+            return View();
         }
+
+        public IActionResult GetCategories()
+        {
+            var categories = _categoryManagement.GetCategories().ToList();
+            return Json(new { data = categories });
+        }
+
+        #region Archived & Restore Categories
+        public IActionResult ArchivedCategories()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetArchivedCategories()
+        {
+            var archivedCategories = await _categoryManagement.GetArchivedCategoriesAsync();
+            return Json(new { data = archivedCategories });
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> RestoreCategoryAsync(int? id)
+        {
+            var IsRestored = await _categoryManagement.RestoreCategoryAsync(id);
+            if (IsRestored)
+                return Json(new { success = true, message = "file has been Restored" });
+
+            return Json(new { success = false, message = "Error while Restoring" });
+        }
+        #endregion
 
         [HttpGet]
         public IActionResult Create()
@@ -102,10 +134,13 @@ namespace myshop.Web.Areas.Admin.Controllers
             if (isDeleted)
             {
                 TempData["Delete"] = "Item has Deleted Successfully";
-                return RedirectToAction("Index");
+                // return RedirectToAction("Index");
+                return Json(new { success = true, message = "The Category is Deleted Successfully" });
             }
-            //! NOT SURE
-            return RedirectToAction("Edit");
+            /* //! NOT SURE
+            return RedirectToAction("Edit"); */
+            
+            return Json(new { success = false, message = "Error while Deleting" });
         }
     }
 }

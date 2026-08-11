@@ -36,11 +36,24 @@ namespace myshop.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetData()
+        public IActionResult GetProducts()
         {
             var products = _productManagement.GetProductsWithCategories().ToList();
 
             // // ?? What does this return type does ????
+            return Json(new { data = products });
+        }
+
+        public IActionResult ArchivedProducts()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetArchivedProducts()
+        {
+            var products = await _productManagement.GetArchivedProducts();
+
             return Json(new { data = products });
         }
 
@@ -141,7 +154,7 @@ namespace myshop.Web.Areas.Admin.Controllers
                         var imgPath = productVM.Product.Img;
                         _fileService.DeleteFile(imgPath);
                     }
-                    
+
                     string fileWithExtension = _fileService.UploadFile(file, @"Images\Products");
                     if (fileWithExtension != "")
                         productVM.Product.Img = @"Images\Products\" + fileWithExtension;
@@ -176,13 +189,23 @@ namespace myshop.Web.Areas.Admin.Controllers
             // // ! NOT FINISHED
             bool isDeleted = _productManagement.DeleteProduct(id);
 
+            /* Used in the hard Delete ONLY !
             //* Deleting the Image 
             var imgPath = productIndb.Img;
-            _fileService.DeleteFile(imgPath);
+            _fileService.DeleteFile(imgPath); */
 
             return Json(new { success = true, message = "file has been Deleted" });
         }
 
+        [HttpPut]
+        public async Task<IActionResult> RestoreProduct(int? id)
+        {
+            var restored = await _productManagement.RestoreProductAsync(id);
 
+            if (restored)
+                return Json(new { success = true, message = "file has been Restored" });
+            
+            return Json(new { success = false, message = "Error while Restoring" });
+        }
     }
 }

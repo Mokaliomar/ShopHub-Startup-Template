@@ -18,6 +18,10 @@ namespace DataAccess.Data
         {
             base.OnModelCreating(builder);
             builder.SeedDataModel();
+
+            //* Global Filters !
+            builder.Entity<Product>().HasQueryFilter(p => !p.IsDeleted); // false ~ true = true condition
+            builder.Entity<Category>().HasQueryFilter(c => c.IsDeleted == false);
         }
     }
 }

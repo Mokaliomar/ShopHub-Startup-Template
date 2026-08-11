@@ -1,4 +1,5 @@
-﻿@* @model IEnumerable<Category> *@
+﻿@using Microsoft.CodeAnalysis.Scripting
+@model IEnumerable<Category>
 
 @{
     ViewBag.PageTitle = "Category Management";
@@ -140,8 +141,8 @@
     </div>
 
     <div class="top-btn">
-        <a asp-controller="Category" asp-action="ArchivedCategories" class="btn btn-archive">
-            <i class="fa-solid fa-box-archive me-1"></i> View Archived
+        <a asp-controller="Category" asp-action="Index" class="btn btn-archive">
+            <i class="fa-solid fa-box-archive me-1"></i> View Categories
         </a>
 
         <a class="btn btn-primary" href="/Admin/Category/Create">
@@ -149,36 +150,19 @@
         </a>
     </div>
 
-    <table id="mytable" class="display table-hover" width="100%">
+    <table id="mytable" width="100%">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Date Created</th>
-                <th style="width:130px;">Actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
-        @* <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@Html.Raw(item.Description)</td>
-                    <td>@item.CreatedTime.ToString("dd MMM yyyy")</td>
-                    <td>
-                        <a class="btn btn-success me-1" href="/Admin/Category/Edit/@item.Id">
-                            <i class="fa-solid fa-pen-to-square"></i> Edit
-                        </a>
-                        <a class="btn btn-danger" href="/Admin/Category/Delete/@item.Id">
-                            <i class="fa-solid fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody> *@
     </table>
+
 </div>
 
 @section Scripts {
-    <script src="~/js/categories.js"></script>
+    <script src="~/js/archivedCategories.js"></script>
 }

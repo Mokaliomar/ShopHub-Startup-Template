@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
   $("#mytable").DataTable({
     ajax: {
       /* Original
@@ -7,15 +7,14 @@
       dataSrc: "data", */
 
       // url: "/Admin/Product/GetData",
-      url: "/Admin/Product/GetProducts",
+      url: "/Admin/Category/GetArchivedCategories",
       type: "GET",
       dataSrc: "data",
     },
     columns: [
       { data: "name" },
       { data: "description" },
-      { data: "price" },
-      { data: "categoryName" },
+      { data: "createdTime" },
       {
         data: "id",
         render: function (id) {
@@ -39,13 +38,9 @@
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     `; */
-          return `
-                        <a href="/Admin/Product/Edit/${id}" class="btn btn-success btn-sm">
-                            <i class="fa-solid fa-pen"></i>
-                        </a>
-
-                        <button onclick="DeleteProduct('/Admin/Product/Delete/${id}')" class="btn btn-danger btn-sm">
-                            <i class="fa-solid fa-trash"></i>
+                    return `
+                        <button onclick="RestoreCategory('/Admin/Category/RestoreCategory/${id}')" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-rotate-left"></i> Restore
                         </button>
                     `;
         },
@@ -56,13 +51,15 @@
   });
 });
 
-// 🚀 الدالة السحرية اللي هتمسح المنتج من غير ريفريش وتحدث الجدول تلقائياً
-function DeleteProduct(url) {
-  if (confirm("Are you sure to delete this product?")) {
+
+function RestoreCategory(url) {
+  if (confirm("Are you sure to restore this category?")) {
     // رسالة تأكيد بسيطة
     $.ajax({
       url: url,
-      type: "DELETE", // أو POST على حسب أنت كاتب إيه في الـ Controller
+      type: "PUT",
+      /* contentType: 'application/json',
+      data: JSON.stringify({ id: id }), // إرسال البيانات في الـ Body */
       success: function (data) {
         if (data.success) {
           // لو الحذف نجح، بنعمل ريفريش للـ DataTable المفتوح تلقائياً

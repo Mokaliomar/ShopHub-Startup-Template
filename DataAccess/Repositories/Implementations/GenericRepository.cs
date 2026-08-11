@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using DataAccess.Data;
 using DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public virtual T GetById(int? Id)
     {
         return dbSet.Find(Id)!;
+    }
+
+    public async Task<T> GetWithIgnoreFiltersAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await dbSet.IgnoreQueryFilters().FirstOrDefaultAsync(predicate);
     }
 
     public virtual void Create(T entity)
