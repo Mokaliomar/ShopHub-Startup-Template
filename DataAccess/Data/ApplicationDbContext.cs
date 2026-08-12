@@ -4,11 +4,11 @@ using DataAccess.Models;
 
 namespace DataAccess.Data
 {
-    public class ApplicationDbContext: IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -22,6 +22,38 @@ namespace DataAccess.Data
             //* Global Filters !
             builder.Entity<Product>().HasQueryFilter(p => !p.IsDeleted); // false ~ true = true condition
             builder.Entity<Category>().HasQueryFilter(c => c.IsDeleted == false);
+        }
+
+
+        public override int SaveChanges()
+        {
+            ApplyAuditInfo();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ApplyAuditInfo();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ApplyAuditInfo()
+        {
+            var entries = ChangeTracker.Entries()
+                               .Where(entry => entry.State == EntityState.Modified || entry.State == EntityState.Added);
+            foreach (var entry in entries)
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property("CreatedAt").CurrentValue = DateTime.UtcNow;
+                    entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+                }
+
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.Property("UpdatedAt").CurrentValue = DateTime.UtcNow;
+                }
+            }
         }
     }
 }

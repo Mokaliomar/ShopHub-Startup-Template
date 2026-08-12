@@ -96,6 +96,7 @@ public class ProductManagement
 
             //* Ensuring that it will be saved in the Change Tracker (to avoid the Untracked entity)
             _unitOfWork.ProductRepository.Update(product);
+            
 
             _unitOfWork.Save();
 

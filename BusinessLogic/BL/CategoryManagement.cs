@@ -38,7 +38,7 @@ public class CategoryManagement
             Id = c.Id,
             Name = c.Name,
             Description = c.Description,
-            CreatedTime = c.CreatedTime.ToString("dd MMM yyyy")
+            CreatedAt = c.CreatedAt.ToString("dd MMM yyyy")
         });
         _cache.Set(cacheKey, Categories, MemoryCacheConfig.Configuration());
 
@@ -69,7 +69,7 @@ public class CategoryManagement
             Id = c.Id,
             Name = c.Name,
             Description = c.Description,
-            CreatedTime = c.CreatedTime.ToString("dd MMM yyyy")
+            CreatedAt = c.CreatedAt.ToString("dd MMM yyyy")
         });
         return archivedCategories;
     }

@@ -17,21 +17,21 @@ public static class SeedData
                 Id = 1,
                 Name = "Laptops",
                 Description = "Modern laptops for work and gaming.",
-                CreatedTime = new DateTime(2026, 1, 19)
+                CreatedAt = new DateTime(2026, 1, 19)
             },
             new Category
             {
                 Id = 2,
                 Name = "Smartphones",
                 Description = "Latest smartphones with advanced features.",
-                CreatedTime = new DateTime(2026, 3, 31)
+                CreatedAt = new DateTime(2026, 3, 31)
             },
             new Category
             {
                 Id = 3,
                 Name = "Accessories",
                 Description = "Useful accessories for your devices.",
-                CreatedTime = new DateTime(2026, 5, 17)
+                CreatedAt = new DateTime(2026, 5, 17)
             }
         );
 
