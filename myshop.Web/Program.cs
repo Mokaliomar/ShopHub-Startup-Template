@@ -25,7 +25,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 //* Identity Registration
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
-    options => options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4)
+    options =>
+    {
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(4);
+        options.SignIn.RequireConfirmedEmail = true;
+    }
     ).AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -36,6 +40,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/Login";
     options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
 });
+
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
 //* MemoryCache Registration
 builder.Services.AddMemoryCache();
@@ -48,6 +54,7 @@ builder.Services.AddScoped<ProductManagement>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IFileService, LocalFileService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IEmailService, MailKitEmailService>();
 
 //* Session
 builder.Services.AddHttpContextAccessor();

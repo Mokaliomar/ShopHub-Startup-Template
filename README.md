@@ -141,12 +141,12 @@ Educational Use Only. -->
 
 ## 🔑 Demo Accounts
 
-To test the application's different roles and functionalities, you can use the following pre-configured accounts:
+To test the application's different roles and functionalities, you will need to use a correct Email Address For the Email Confirmation Message To be able to access the web application !
 
-| Role                | Email                 | Password              |
+<!-- | Role                | Email                 | Password              |
 | :------------------ | :-------------------- | :-------------------- |
 | **Admin**           | OmarAdmin@gmail.com   | OmarAdmin12345#       |
-| **Customer / User** | OmarMohamed@yahoo.com | OmarMohamed200512345# |
+| **Customer / User** | OmarMohamed@yahoo.com | OmarMohamed200512345# | -->
 
 > **Note:** Make sure you have executed the database migrations or database script before attempting to log in with these credentials.
 
