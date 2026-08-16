@@ -1,0 +1,335 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace DataAccess.Migrations
+{
+    /// <inheritdoc />
+    public partial class NewRelation : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<string>(
+                name: "Description",
+                table: "Products",
+                type: "nvarchar(500)",
+                maxLength: 500,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Description",
+                table: "Categories",
+                type: "nvarchar(500)",
+                maxLength: 500,
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6413));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6416));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 3,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6418));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 4,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6419));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 5,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6420));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 6,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6421));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 7,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6422));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 8,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6424));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 9,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6425));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 10,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6426));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 11,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6427));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 12,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6428));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 13,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6429));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 14,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6431));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 15,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6432));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 16,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6433));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 17,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6434));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 18,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6436));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 19,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6437));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 20,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 14, 13, 26, 36, 200, DateTimeKind.Utc).AddTicks(6438));
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<string>(
+                name: "Description",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(500)",
+                oldMaxLength: 500);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Description",
+                table: "Categories",
+                type: "nvarchar(max)",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(500)",
+                oldMaxLength: 500);
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6263));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 2,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6266));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 3,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6267));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 4,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6269));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 5,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6270));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 6,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6271));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 7,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6272));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 8,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6274));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 9,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6275));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 10,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6276));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 11,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6277));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 12,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6278));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 13,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6280));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 14,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6281));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 15,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6282));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 16,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6283));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 17,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6285));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 18,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6286));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 19,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6287));
+
+            migrationBuilder.UpdateData(
+                table: "Products",
+                keyColumn: "Id",
+                keyValue: 20,
+                column: "CreatedAt",
+                value: new DateTime(2026, 8, 12, 18, 12, 38, 518, DateTimeKind.Utc).AddTicks(6288));
+        }
+    }
+}

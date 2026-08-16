@@ -14,7 +14,7 @@ $(document).ready(function () {
     columns: [
       { data: "name" },
       { data: "description" },
-      { data: "createdTime" },
+      { data: "createdAt" },
       {
         data: "id",
         render: function (id) {

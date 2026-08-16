@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DataAccess.Migrations;
 
 namespace DataAccess.Models
 {
@@ -6,7 +7,6 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -15,6 +15,8 @@ namespace DataAccess.Models
 
         public bool IsDeleted { get; set; }
         public DateTime DeletedAt { get; set; }
+
+        public IEnumerable<Product> Products { get; set; } = new List<Product>();
 
     }
 }

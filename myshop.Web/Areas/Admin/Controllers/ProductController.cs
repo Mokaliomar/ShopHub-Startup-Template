@@ -38,7 +38,7 @@ namespace myshop.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            var products = _productManagement.GetProductsWithCategories().ToList();
+            var products = _productManagement.GetProductsWithCategories();
 
             // // ?? What does this return type does ????
             return Json(new { data = products });

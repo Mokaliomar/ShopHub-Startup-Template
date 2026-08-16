@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Builder;
+using DataAccess.Configurations;
 
 namespace DataAccess.Data
 {
@@ -22,7 +24,20 @@ namespace DataAccess.Data
             //* Global Filters !
             builder.Entity<Product>().HasQueryFilter(p => !p.IsDeleted); // false ~ true = true condition
             builder.Entity<Category>().HasQueryFilter(c => c.IsDeleted == false);
+
+            //* Fluent API
+            builder.ApplyConfiguration(new ProductConfig());
+            builder.ApplyConfiguration(new CategoryConfig());
+            builder.ApplyConfiguration(new ApplicationUserConfig());
         }
+
+        /* protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<string>().HaveMaxLength(100);
+            configurationBuilder.Properties<decimal>().HaveColumnType("decimal(18,2)");
+            
+            base.ConfigureConventions(configurationBuilder);
+        } */
 
 
         public override int SaveChanges()

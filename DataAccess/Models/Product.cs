@@ -13,15 +13,13 @@ namespace DataAccess.Models
     {
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
 
-        [DisplayName("Image")]
+        /* [DisplayName("Image")]*/
         [ValidateNever]
         public string Img { get; set; }
 
-        [Required]
         public decimal Price { get; set; }
         
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -31,8 +29,7 @@ namespace DataAccess.Models
         public bool IsDeleted { get; set; }
         public DateTime DeletedAt { get; set; }
 
-        [Required]
-        [DisplayName("Category")]
+        // [DisplayName("Category")]
         public int CategoryId { get; set; }
         [ValidateNever]
         public Category Category { get; set; }

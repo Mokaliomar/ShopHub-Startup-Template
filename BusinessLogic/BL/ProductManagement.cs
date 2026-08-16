@@ -19,7 +19,7 @@ public class ProductManagement
 
     public IEnumerable<ProductDto> GetProductsWithCategories()
     {
-        return _unitOfWork.ProductRepository.GetProductsWithCategories()
+        var result = _unitOfWork.ProductRepository.GetProductsWithCategories()
                .Select(x => new ProductDto
                {
                    Id = x.Id,
@@ -28,7 +28,8 @@ public class ProductManagement
                    Description = x.Description,
                    Price = x.Price,
                    CategoryName = x.Category.Name
-               }).ToList();
+               });
+        return result;
     }
     public async Task<IEnumerable<ArchivedProductsDTO>> GetArchivedProducts()
     {
@@ -96,7 +97,7 @@ public class ProductManagement
 
             //* Ensuring that it will be saved in the Change Tracker (to avoid the Untracked entity)
             _unitOfWork.ProductRepository.Update(product);
-            
+
 
             _unitOfWork.Save();
 
@@ -124,7 +125,7 @@ public class ProductManagement
 
             return true;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine(ex.Message);
             return false;
