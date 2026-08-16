@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using myshop.Web.Interfaces;
 
 namespace DataAccess.Models
 {
-    public class Product
+    public class Product : IAuditable
     {
         public int Id { get; set; }
 

@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260816192226_ApplicationUser Audit Properties")]
+    partial class ApplicationUserAuditProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,6 +60,9 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("MyProperty")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -228,7 +234,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(623),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5386),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Apple M3 chip, 16GB RAM, 512GB SSD, Space Gray.",
                             Img = "Images/Products/4eb463ee-d056-4ff7-94a0-bc2418c1f866.png",
@@ -241,7 +247,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(626),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5389),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Intel Core i7, 16GB RAM, 512GB SSD, InfinityEdge Display.",
                             Img = "Images/Products/ef491e09-7bef-4e18-af5c-71441104b8eb.jpg",
@@ -254,7 +260,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(627),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5390),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Titanium design, A17 Pro chip, 48MP Main camera.",
                             Img = "Images/Products/c42a18f3-79d6-44c9-9047-438d295dbacd.webp",
@@ -267,7 +273,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 4,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(629),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5391),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dynamic AMOLED 2X, AI Camera Features, 128GB Storage.",
                             Img = "Images/Products/c1db582a-79c3-40ca-bdf6-f939bdd40e5a.jpg",
@@ -280,7 +286,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 5,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(630),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5392),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Dynamic AMOLED 2X, AI Camera Features, 256GB Storage.",
                             Img = "Images/Products/7462ab44-1ae1-490d-bf55-c3c550ce72c2.jpg",
@@ -293,7 +299,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 6,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(631),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5393),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "AMD Ryzen 7, RTX 4060, 16GB RAM, 1TB SSD, 165Hz Display.",
                             Img = "Images/Products/6e4d4b55-22b1-4358-834f-2cecc6123b3c.jpg",
@@ -306,7 +312,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 7,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(632),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5395),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Intel Core Ultra 7, 16GB RAM, 1TB SSD, Touch OLED Screen.",
                             Img = "Images/Products/87789d13-f31e-4bbd-9343-a5ad90396fad.webp",
@@ -319,7 +325,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 8,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(634),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5396),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "AMD Ryzen 9, RTX 4070, 32GB RAM, 1TB NVMe SSD.",
                             Img = "Images/Products/ac682fc5-fad4-485e-a800-a2a2893fa8ab.jpg",
@@ -332,7 +338,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 9,
                             CategoryId = 1,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(635),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5397),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Intel Core i5, 8GB RAM, 512GB SSD, Ultra Lightweight.",
                             Img = "Images/Products/default-laptop.png",
@@ -345,7 +351,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 10,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(636),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5398),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Google Tensor G3, 12GB RAM, 128GB Storage, Obsidian Black.",
                             Img = "Images/Products/default-phone.png",
@@ -358,7 +364,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 11,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(637),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5399),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "MediaTek Dimensity 9200+, Leica Camera System, 512GB Storage.",
                             Img = "Images/Products/default-phone.png",
@@ -371,7 +377,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 12,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(638),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5401),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Snapdragon 8 Gen 3, 16GB RAM, 512GB, 100W Fast Charging.",
                             Img = "Images/Products/default-phone.png",
@@ -384,7 +390,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 13,
                             CategoryId = 2,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(640),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5402),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Glyph Interface, Snapdragon 8+ Gen 1, 12GB RAM, Transparent Design.",
                             Img = "Images/Products/default-phone.png",
@@ -397,7 +403,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 14,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(641),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5403),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Performance Wireless Mouse, 8K DPI, Quiet Clicks, Ergonomic.",
                             Img = "Images/Products/default-accessory.png",
@@ -410,7 +416,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 15,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(642),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5404),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Mechanical Gaming Keyboard, Gateron Red Switches, RGB Backlit.",
                             Img = "Images/Products/default-accessory.png",
@@ -423,7 +429,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 16,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(643),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5405),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "24,000mAh 3-Port Laptop Portable Charger with 140W Output.",
                             Img = "Images/Products/default-accessory.png",
@@ -436,7 +442,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 17,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(645),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5407),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Wireless Industry Leading Noise Canceling Headphones, Silver.",
                             Img = "Images/Products/default-accessory.png",
@@ -449,7 +455,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 18,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(646),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5408),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "USB-C Charging, Active Noise Cancellation, Adaptive Audio.",
                             Img = "Images/Products/default-accessory.png",
@@ -462,7 +468,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 19,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(647),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5409),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Portable External Solid State Drive, USB 3.2 Gen 2, IP65 Water Resistant.",
                             Img = "Images/Products/default-accessory.png",
@@ -475,7 +481,7 @@ namespace DataAccess.Migrations
                         {
                             Id = 20,
                             CategoryId = 3,
-                            CreatedAt = new DateTime(2026, 8, 16, 19, 24, 41, 762, DateTimeKind.Utc).AddTicks(648),
+                            CreatedAt = new DateTime(2026, 8, 16, 19, 22, 25, 996, DateTimeKind.Utc).AddTicks(5410),
                             DeletedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "IPS Black Panel, USB-C Hub, HDR400, Ergonomic Stand.",
                             Img = "Images/Products/default-accessory.png",

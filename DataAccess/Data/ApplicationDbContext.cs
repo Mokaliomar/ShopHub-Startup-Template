@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Builder;
 using DataAccess.Configurations;
+using myshop.Web.Interfaces;
 
 namespace DataAccess.Data
 {
@@ -54,7 +55,7 @@ namespace DataAccess.Data
 
         private void ApplyAuditInfo()
         {
-            var entries = ChangeTracker.Entries()
+            var entries = ChangeTracker.Entries<IAuditable>()
                                .Where(entry => entry.State == EntityState.Modified || entry.State == EntityState.Added);
             foreach (var entry in entries)
             {

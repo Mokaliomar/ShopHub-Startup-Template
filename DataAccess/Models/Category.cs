@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DataAccess.Migrations;
+using myshop.Web.Interfaces;
 
 namespace DataAccess.Models
 {
-    public class Category
+    public class Category : IAuditable
     {
         public int Id { get; set; }
 
