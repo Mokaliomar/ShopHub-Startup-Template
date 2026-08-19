@@ -9,6 +9,7 @@ using MimeKit;
 
 using MailKit.Net.Smtp;
 using BusinessLogic.DTOs;
+using System.Text;
 
 
 namespace BusinessLogic.Services.Implementation;
@@ -21,8 +22,6 @@ public class MailKitEmailService : IEmailService
         _settings = options.Value;
     }
 
-    //? I think we will make an Email Class so we can handle the parameters more easily
-    //! Stopped at .. why i can't make it use Asynchronous ???
     public async Task SendEmailAsync(EmailData email)
     {
         //* Making the Mail
@@ -82,4 +81,46 @@ public class MailKitEmailService : IEmailService
         await SendEmailAsync(email);
     }
 
+    public async Task CreateOrderConfirmationEmail(string toName, string toEmail, OrderConfirmationDTO orderInfo)
+    {
+        var templatePath = Path.Combine(AppContext.BaseDirectory, "Templates", "OrderConfirmation.html");
+        
+        var template = File.ReadAllText(templatePath);
+        
+        var orderTemplate = new StringBuilder(template);
+        
+        orderTemplate.Replace("{{CustomerName}}", orderInfo.CustomerName);
+        orderTemplate.Replace("{{OrderId}}", $"{orderInfo.OrderId}");
+        
+        // //? Replacing the {{OrderItemsRows}}} with the list of the order items "SOME HOW" !
+        var orderItems = new StringBuilder();
+        foreach(var item in orderInfo.OrderItems)
+        {
+            orderItems.Append(@$"
+            <tr style='color: #6c757d; text-align: left;'>
+                <td style='padding: 8px 0; border-bottom: 1px solid #dee2e6;'>{item.Name}</td>
+                <td style='padding: 8px 0; text-align: center; border-bottom: 1px solid #dee2e6;'>{item.Quantity}</td>
+                <td style='padding: 8px 0; text-align: right; border-bottom: 1px solid #dee2e6;'>{item.Price}</td>
+            </tr>
+            ");
+        }
+        orderTemplate.Replace("{{OrderItemsRows}}", orderItems.ToString());
+
+        orderTemplate.Replace("{{TotalPrice}}", orderInfo.TotalPrice.ToString("C2"));
+        orderTemplate.Replace("{{ShippingAddress}}", orderInfo.ShippingAddress);
+        orderTemplate.Replace("{{City}}", orderInfo.City);
+        orderTemplate.Replace("{{PhoneNumber}}", orderInfo.PhoneNumber);
+        orderTemplate.Replace("{{EstimatedDeliveryDate}}", orderInfo.EstimatedDeliveryDate);
+        orderTemplate.Replace("{{Year}}", "2026");
+        
+        EmailData email = new()
+        {
+            ToName = toName,
+            ToEmail = toEmail,
+            Subject = "Order Confirmation",
+            Content = orderTemplate.ToString()
+        };
+
+        await SendEmailAsync(email);
+    }
 }

@@ -3,6 +3,8 @@ using BusinessLogic.DTOs;
 using BusinessLogic.Services.Interfaces;
 using DataAccess.Models;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -14,10 +16,14 @@ namespace myshop.Web.Controllers
     public class OrderController : Controller
     {
         private readonly ProductManagement _productManagement;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailService _emailService;
         private readonly ICartService _cartService;
-        public OrderController(ICartService cartService, ProductManagement productManagement)
+        public OrderController(ICartService cartService, ProductManagement productManagement, UserManager<ApplicationUser> userManager, IEmailService emailService)
         {
             _productManagement = productManagement;
+            _userManager = userManager;
+            _emailService = emailService;
             _cartService = cartService;
         }
 
@@ -38,6 +44,7 @@ namespace myshop.Web.Controllers
             // Mapping the Object
             ShoppingCartDto? shoppingCartDto = shoppingCart.Adapt<ShoppingCartDto>();
             shoppingCartDto = _cartService.AddItem(shoppingCartDto, id);
+            // shoppingCartDto.
             shoppingCart = shoppingCartDto.Adapt<ShoppingCartVM>();
 
             SaveShoppingCartToSession(shoppingCart);
@@ -129,5 +136,32 @@ namespace myshop.Web.Controllers
             return RedirectToAction("Cart");
         }
 
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> OrderSuccess(ShoppingCartVM checkoutOrder)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            OrderConfirmationDTO order = new()
+            {
+                CustomerName = user.Name,
+                OrderId = 1,
+                OrderItems = checkoutOrder.CartItems.Adapt<List<CartItemDto>>(),
+                TotalPrice = checkoutOrder.Total,
+                ShippingAddress = user.Address,
+                City = user.City,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            // await _emailService.CreateOrderConfirmationEmail(user.Name, user.Email, order);
+
+            return View();
+        }
     }
 }

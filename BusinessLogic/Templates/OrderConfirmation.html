@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f6f8; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; -webkit-font-smoothing: antialiased;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;">
+        <tr>
+            <td align="center" style="padding: 40px 10px;">
+                
+                <!-- Main Container -->
+                <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); max-width: 600px;">
+                    
+                    <!-- Header Section -->
+                    <tr>
+                        <td align="center" style="background-color: #0d6efd; padding: 35px 20px; color: #ffffff;">
+                            <h1 style="margin: 0; font-size: 26px; font-weight: bold; letter-spacing: 0.5px;">Omar's Shop</h1>
+                            <p style="margin: 8px 0 0 0; font-size: 15px; opacity: 0.9;">Order Confirmation</p>
+                        </td>
+                    </tr>
+
+                    <!-- Body Content -->
+                    <tr>
+                        <td style="padding: 35px 30px;">
+                            
+                            <!-- Greeting & Status -->
+                            <h2 style="margin: 0 0 10px 0; color: #212529; font-size: 20px;">Thank you for your order, {{CustomerName}}!</h2>
+                            <p style="margin: 0 0 25px 0; color: #6c757d; font-size: 15px; line-height: 1.5;">
+                                We’ve received your order <strong>#{{OrderId}}</strong> and we're getting it ready for delivery.
+                            </p>
+
+                            <!-- Order Summary Table -->
+                            <h3 style="margin: 0 0 12px 0; color: #212529; font-size: 16px; border-bottom: 2px solid #f1f3f5; padding-bottom: 8px;">Order Summary</h3>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 25px; font-size: 14px;">
+                                <thead>
+                                    <tr style="color: #6c757d; text-align: left;">
+                                        <th style="padding: 8px 0; border-bottom: 1px solid #dee2e6;">Item</th>
+                                        <th style="padding: 8px 0; text-align: center; border-bottom: 1px solid #dee2e6;">Qty</th>
+                                        <th style="padding: 8px 0; text-align: right; border-bottom: 1px solid #dee2e6;">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic Items Rows Inserted from Backend -->
+                                    {{OrderItemsRows}}
+                                    
+                                    <!-- Total Price Row -->
+                                    <tr>
+                                        <td colspan="2" style="padding: 15px 0 0 0; font-size: 16px; font-weight: bold; color: #212529; border-top: 2px solid #dee2e6;">Total Price:</td>
+                                        <td style="padding: 15px 0 0 0; font-size: 18px; font-weight: bold; color: #0d6efd; text-align: right; border-top: 2px solid #dee2e6;">{{TotalPrice}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Delivery Information Card -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8f9fa; border-radius: 8px; margin-bottom: 25px;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #212529; font-size: 15px;">🚚 Delivery Information</h3>
+                                        <p style="margin: 0 0 5px 0; color: #495057; font-size: 14px;">
+                                            <strong>Address:</strong> {{ShippingAddress}}, {{City}}
+                                        </p>
+                                        <p style="margin: 0 0 5px 0; color: #495057; font-size: 14px;">
+                                            <strong>Phone:</strong> {{PhoneNumber}}
+                                        </p>
+                                        <p style="margin: 0; color: #495057; font-size: 14px;">
+                                            <strong>Estimated Delivery:</strong> {{EstimatedDeliveryDate}}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Call to Action -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center" style="padding: 10px 0;">
+                                        <a href="{{OrderDetailsLink}}" style="background-color: #0d6efd; color: #ffffff; text-decoration: none; padding: 12px 28px; border-radius: 6px; font-weight: 600; font-size: 15px; display: inline-block;">View Your Order</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td align="center" style="background-color: #f8f9fa; padding: 20px; border-top: 1px solid #e9ecef; color: #adb5bd; font-size: 13px;">
+                            <p style="margin: 0 0 5px 0;">Need help? Contact our support at <a href="mailto:omarsshop11@gmail.com" style="color: #6c757d; text-decoration: underline;">omarsshop11@gmail.com</a></p>
+                            <p style="margin: 0;">&copy; {{Year}} MyShop. All rights reserved.</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

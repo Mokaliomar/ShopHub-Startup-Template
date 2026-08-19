@@ -19,4 +19,5 @@ public interface ICartService
     ShoppingCartDto ClearCart(ShoppingCartDto shoppingCart);
 
     decimal GetTotal(ShoppingCartDto shoppingCart);
+    int GetItemCount(ShoppingCartDto shoppingCart);
 }

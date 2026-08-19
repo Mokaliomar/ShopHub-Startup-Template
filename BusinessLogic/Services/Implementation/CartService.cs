@@ -32,6 +32,7 @@ public class CartService : ICartService
             shoppingCart.CartItems.Add(newCartItem);
 
         //* Total Evaluation
+        shoppingCart.ItemCount = GetItemCount(shoppingCart);
         shoppingCart.Total = GetTotal(shoppingCart);
 
         return shoppingCart;
@@ -46,6 +47,7 @@ public class CartService : ICartService
         cartItem.Quantity++;
 
         // Recalculate the total 
+        shoppingCart.ItemCount = GetItemCount(shoppingCart);
         shoppingCart.Total = GetTotal(shoppingCart);
 
         return shoppingCart;
@@ -60,11 +62,16 @@ public class CartService : ICartService
         if (cartItem.Quantity - 1 > 0)
             cartItem.Quantity--;
 
+        shoppingCart.ItemCount = GetItemCount(shoppingCart);
         shoppingCart.Total = GetTotal(shoppingCart);
 
         return shoppingCart;
     }
 
+    public int GetItemCount(ShoppingCartDto shoppingCart)
+    {
+        return shoppingCart.CartItems.Sum(q => q.Quantity);
+    }
     public decimal GetTotal(ShoppingCartDto shoppingCart)
     {
         return shoppingCart.CartItems.Sum(item => item.Price * item.Quantity);
@@ -75,6 +82,7 @@ public class CartService : ICartService
         var itemToRemove = shoppingCart.CartItems.FirstOrDefault(item => item.Id == productId)!;
         shoppingCart.CartItems.Remove(itemToRemove);
 
+        shoppingCart.ItemCount = GetItemCount(shoppingCart);
         shoppingCart.Total = GetTotal(shoppingCart);
 
         return shoppingCart;

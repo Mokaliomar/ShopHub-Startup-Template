@@ -1,0 +1,54 @@
+﻿@model int // Assuming you pass the OrderId (or an OrderSuccessVM)
+@{
+    ViewData["Title"] = "Order Confirmed - ShopHub";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-center">
+                
+                <!-- Success Icon 🟢 -->
+                <div class="mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle" style="width: 85px; height: 85px;">
+                        <i class="fa-solid fa-check fs-1">&#x1F5F8;</i>
+                    </div>
+                </div>
+
+                <!-- Main Heading & Subtitle 🎉 -->
+                <h2 class="fw-bold text-dark mb-2">Thank You for Your Order!</h2>
+                <p class="text-muted mb-4">
+                    Your order has been placed successfully. We are now processing it.
+                </p>
+
+                <!-- Order Quick Details 📦 -->
+                <div class="bg-light rounded-3 p-3 mb-4 text-start">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-muted">Order Number:</span>
+                        <span class="fw-bold text-primary">#@Model</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted">Payment Status:</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle">Confirmed / Cash on Delivery</span>
+                    </div>
+                </div>
+
+                <!-- Email Notice Box ✉️ -->
+                <div class="alert alert-info border-0 rounded-3 d-flex align-items-center text-start mb-4" role="alert">
+                    <i class="fa-solid fa-envelope-circle-check fs-3 me-3 text-info"></i>
+                    <div class="small">
+                        A confirmation email containing your full order summary and invoice has been sent to your registered email address.
+                    </div>
+                </div>
+
+                <!-- Actions 🧭 -->
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg rounded-pill px-4">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Continue Shopping
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
