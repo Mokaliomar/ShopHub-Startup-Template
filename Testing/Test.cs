@@ -1,4 +1,4 @@
-using System.Text;
+/* using System.Text;
 
 string name = "Omar";
 int age = 20;
@@ -7,11 +7,17 @@ var fileData = File.ReadAllText("./File.txt");
 
 StringBuilder s = new StringBuilder(fileData);
 
-/* string.Replace("{{Name}}", name);
+//  string.Replace("{{Name}}", name);
 
-string.Replace("{{age}}", $"{age}"); */
+// string.Replace("{{age}}", $"{age}");
 
 s.Replace("{{Name}}", name);
 s.Replace("{{age}}", $"{age}");
 
-System.Console.WriteLine("The Result : " + s);
+System.Console.WriteLine("The Result : " + s);*/
+
+Console.WriteLine(OrderStatus.Pending.ToString());
+public enum OrderStatus
+{
+    Pending
+}

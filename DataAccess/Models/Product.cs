@@ -30,9 +30,15 @@ namespace DataAccess.Models
         public bool IsDeleted { get; set; }
         public DateTime DeletedAt { get; set; }
 
+        #region Relationships
+
         // [DisplayName("Category")]
         public int CategoryId { get; set; }
         [ValidateNever]
         public Category Category { get; set; }
+        
+        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        
+        #endregion
     }
 }

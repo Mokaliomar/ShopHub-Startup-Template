@@ -160,7 +160,7 @@ public class CategoryManagement
 
             return true;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Message: {ex.Message}");
             return false;

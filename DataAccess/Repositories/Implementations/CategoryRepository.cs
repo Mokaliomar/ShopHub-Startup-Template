@@ -10,8 +10,8 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
 {
     // private readonly ApplicationDbContext _context;
     public CategoryRepository(ApplicationDbContext context) : base(context)
-    {}
-    
+    { }
+
     //! If you will not edit the method in the parent class, so you will not need to override, In our case we just are testing
     public override IEnumerable<Category> All()
     {

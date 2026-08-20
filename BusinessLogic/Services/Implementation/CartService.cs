@@ -90,6 +90,8 @@ public class CartService : ICartService
     public ShoppingCartDto ClearCart(ShoppingCartDto shoppingCart)
     {
         shoppingCart.CartItems.Clear();
+        shoppingCart.ItemCount = 0;
+        shoppingCart.Total = 0;
         return shoppingCart;
     }
 }

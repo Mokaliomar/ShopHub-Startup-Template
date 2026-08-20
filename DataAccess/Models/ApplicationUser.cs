@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using myshop.Web.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,8 @@ namespace DataAccess.Models
         public string City { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; }
+
+        [ValidateNever]
+        public ICollection<OrderHeader> OrderHeaders { get; set; } = new List<OrderHeader>();
     }
 }

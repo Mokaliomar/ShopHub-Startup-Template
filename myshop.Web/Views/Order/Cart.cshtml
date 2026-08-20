@@ -232,7 +232,7 @@
     @if (Model != null && Model.CartItems.Any())
     {
 
-        <form method="post" asp-controller="Order" asp-action="OrderSuccess" class="row g-4">
+        <div class="row g-4">
 
             <!-- Items List -->
             <div class="col-lg-8">
@@ -252,18 +252,18 @@
                                 </thead>
 
                                 <tbody>
-                                    @* @foreach (var item in Model.CartItems) *@
-                                    @for (int i = 0; i < Model.CartItems.Count; i++)
+                                    @* @for (int i = 0; i < Model.CartItems.Count; i++) *@
+                                    @foreach (var item in Model.CartItems)
                                     {
                                         <tr>
                                             <!-- Product Info -->
                                             <td class="ps-4 py-3">
                                                 <div class="d-flex align-items-center gap-3">
-                                                    @if (!string.IsNullOrEmpty(Model.CartItems[i].Img))
+                                                    @if (!string.IsNullOrEmpty(item.Img))
                                                     {
-                                                        <img src="~/@Model.CartItems[i].Img" class="cart-product-image"
-                                                             alt="@Model.CartItems[i].Name" />
-                                                        <input type="hidden" name="CartItems[@i].Img" value="@Model.CartItems[i].Img" />
+                                                        <img src="~/@item.Img" class="cart-product-image"
+                                                             alt="@item.Name" />
+                                                        
                                                     }
                                                     else
                                                     {
@@ -271,14 +271,10 @@
                                                              alt="No Image" />
                                                     }
                                                     <div>
-                                                        <h6 class="cart-product-name">@Model.CartItems[i].Name</h6>
-                                                        <input type="hidden" name="CartItems[@i].Name"
-                                                               value="@Model.CartItems[i].Name" />
+                                                        <h6 class="cart-product-name">@item.Name</h6>
 
                                                         <small class="text-muted d-block">Product Code:
-                                                            #@Model.CartItems[i].Id</small>
-                                                            <input type="hidden" name="CartItems[@i].Id"
-                                                                   value="@Model.CartItems[i].Id" />
+                                                            #@item.Id</small>
 
                                                                 
                                                         </div>
@@ -287,27 +283,25 @@
 
                                                 <!-- Price -->
                                                 <td class="text-center cart-price">
-                                                    @Model.CartItems[i].Price.ToString("C2")
+                                                    @item.Price.ToString("C2")
                                                 </td>
-                                                <input type="hidden" name="CartItems[@i].Price" value="@Model.CartItems[i].Price">
+                                                
 
                                                 <!-- Quantity Controls (+ / -) -->
                                                 <td class="text-center">
                                                     <div class="quantity-control">
                                                         <!-- Minus Button -->
-                                                        <a asp-action="QuantityMinus" asp-route-productId="@Model.CartItems[i].Id"
+                                                        <a asp-action="QuantityMinus" asp-route-productId="@item.Id"
                                                            class="quantity-button" title="Decrease quantity"
                                                            aria-label="Decrease quantity">
                                                             <i class="fa-solid fa-minus"></i>
                                                         </a>
 
                                                         <!-- Quantity Value -->
-                                                        <span class="quantity-value">@Model.CartItems[i].Quantity</span>
-                                                        <input type="hidden" name="CartItems[@i].Quantity"
-                                                               value="@Model.CartItems[i].Quantity">
+                                                        <span class="quantity-value">@item.Quantity</span>
 
                                                         <!-- Plus Button -->
-                                                        <a asp-action="QuantityPlus" asp-route-productId="@Model.CartItems[i].Id"
+                                                        <a asp-action="QuantityPlus" asp-route-productId="@item.Id"
                                                            class="quantity-button" title="Increase quantity"
                                                            aria-label="Increase quantity">
                                                             <i class="fa-solid fa-plus"></i>
@@ -317,12 +311,12 @@
 
                                                 <!-- Line Total -->
                                                 <td class="text-center cart-total">
-                                                    @((Model.CartItems[i].Price * Model.CartItems[i].Quantity).ToString("C2"))
+                                                    @((item.Price * item.Quantity).ToString("C2"))
                                                 </td>
 
                                                 <!-- Remove Action -->
                                                 <td class="pe-4 text-end">
-                                                    <a asp-action="RemoveItem" asp-route-productId="@Model.CartItems[i].Id"
+                                                    <a asp-action="RemoveItem" asp-route-productId="@item.Id"
                                                        class="btn btn-outline-danger btn-sm clear-button"
                                                        title="Remove item from cart">
                                                         <i class="fa-solid fa-trash-can"></i>
@@ -357,7 +351,7 @@
                             <div class="d-flex justify-content-between mb-3 summary-label">
                                 <span>Items Count</span>
                                 <span class="fw-semibold">@Model.ItemCount pcs</span>
-                                <input type="hidden" name="ItemCount" value="@Model.ItemCount">
+                                
                             </div>
 
                             @* <div class="d-flex justify-content-between mb-3 summary-label">
@@ -375,12 +369,12 @@
                             <div class="d-flex justify-content-between mb-4">
                                 <span class="fs-5 fw-bold" style="color: #1e3a8a;">Grand Total</span>
                                 <span class="fs-5 fw-bold cart-total">@Model.Total.ToString("C2")</span>
-                                <input type="hidden" name="Total" value="@Model.Total">
+                                
                             </div>
 
-                            <button type="submit" class="checkout-button">
+                            <a asp-controller="Order" asp-action="Checkout" class="checkout-button">
                                 <i class="fa-solid fa-credit-card me-2"></i> Proceed to Checkout
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -389,7 +383,7 @@
                             Delivery</small>
                         </div>
                     </div>
-                </form>
+                </div>
             }
     else
             {
