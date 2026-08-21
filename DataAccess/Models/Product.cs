@@ -39,6 +39,7 @@ namespace DataAccess.Models
         
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         
+        public ICollection<Review> ProductReviews { get; set; } = new List<Review>();
         #endregion
     }
 }

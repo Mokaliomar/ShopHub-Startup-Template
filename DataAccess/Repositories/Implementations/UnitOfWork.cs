@@ -11,6 +11,7 @@ public class UnitOfWork : IUnitOfWork
 
     public ICategoryRepository CategoryRepository { get; private set; }
     public IOrderRepository OrderRepository { get; private set; }
+    public IReviewRepository ReviewRepository { get; private set; }
     private readonly ApplicationDbContext _context;
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -18,6 +19,7 @@ public class UnitOfWork : IUnitOfWork
         ProductRepository = new ProductRepository(context);
         CategoryRepository = new CategoryRepository(context);
         OrderRepository = new OrderRepository(context);
+        ReviewRepository = new ReviewRepository(context);
     }
 
 

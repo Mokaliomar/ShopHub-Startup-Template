@@ -9,6 +9,7 @@ public interface IUnitOfWork : IDisposable
 
     IOrderRepository OrderRepository { get; }
 
+    IReviewRepository ReviewRepository { get; }
 
     int Save();
 }

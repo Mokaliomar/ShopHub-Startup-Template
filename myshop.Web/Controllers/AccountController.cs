@@ -28,7 +28,7 @@ namespace myshop.Web.Controllers
         #region Login Section
         // GET: UserController
         [HttpGet]
-        [AllowAnonymous]
+        [AllowAnonymous]    
         public ActionResult Login(string ReturnUrl)
         {
             return View(new LoginVM()

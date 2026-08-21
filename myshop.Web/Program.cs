@@ -50,6 +50,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<CategoryManagement>();
 builder.Services.AddScoped<ProductManagement>();
 builder.Services.AddScoped<OrderManagement>();
+builder.Services.AddScoped<ReviewManagement>();
 // builder.Services.AddScoped<IProductRepository, ProductRepository>();
 // builder.Services.AddScoped<ICategoryRepository, ICategoryRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -32,6 +32,7 @@ namespace DataAccess.Data
             builder.ApplyConfiguration(new ApplicationUserConfig());
             builder.ApplyConfiguration(new OrderHeaderConfig());
             builder.ApplyConfiguration(new OrderDetailConfig());
+            builder.ApplyConfiguration(new ReviewConfig());
         }
 
         /* protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

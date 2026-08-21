@@ -174,6 +174,9 @@ To test the application's different roles and functionalities, you will need to 
 ![Customer Empty Shopping Cart](./Docs/Screenshots/Empty%20Shopping%20Cart%20Screen.png)
 ![Customer Shopping Cart](./Docs/Screenshots/Shopping%20Cart%20Screen.png)
 
+### Checkout Screen
+![Checkout Screen](./Docs/Screenshots/Checkout.png)
+
 </details>
 
 <details>
@@ -196,5 +199,19 @@ To test the application's different roles and functionalities, you will need to 
 ### User Management
 
 ![Admin User Management](./Docs/Screenshots/Admin%20User%20Control.png)
+
+</details>
+
+<details>
+  <summary><b>📧 Email Notifications (Click to expand)</b></summary>
+  <br>
+
+### Registration Email Confirmation
+
+![Registration Email Confirmation](./Docs/Screenshots/Check%20Your%20Email%20Screen.png)
+
+### Checkout Confirmation Email 
+![Checkout Screen](./Docs/Screenshots/Checkout%20Confirmation%20Email.png)
+
 
 </details>

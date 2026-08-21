@@ -20,5 +20,7 @@ namespace DataAccess.Models
 
         [ValidateNever]
         public ICollection<OrderHeader> OrderHeaders { get; set; } = new List<OrderHeader>();
+    
+        public ICollection<Review> UserReviews { get; set; } = new List<Review>();
     }
 }

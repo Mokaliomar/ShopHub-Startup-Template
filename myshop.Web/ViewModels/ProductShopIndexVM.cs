@@ -10,4 +10,8 @@ public class ProductShopIndexVM
     public string Name { get; set; } = "";
     public string Description { get; set; } = "";
     public decimal Price { get; set; }
+    
+    public float AverageRate { get; set; }
+    public int ReviewsCount { get; set; }
+    public IEnumerable<ReviewVM> Reviews { get; set; } = new List<ReviewVM>();
 }
