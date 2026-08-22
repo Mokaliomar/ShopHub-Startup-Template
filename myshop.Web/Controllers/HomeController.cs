@@ -38,13 +38,7 @@ namespace myshop.Web.Controllers
                 Price = x.Price,
             }); */
             var productListDto = _productManagement.GetPaginatedProducts(searchTerm, sortingTerm, pageNumber, 8);
-            foreach (var productDto in productListDto.Items)
-            {
-                var productId = productDto.Id;
-                productDto.AverageRate = _reviewManagement.GetAvgProductReviewRate(productId);
-
-                productDto.ReviewsCount = _reviewManagement.GetProductReviewsCount(productId);
-            }
+            
             var productListVM = productListDto.Adapt<ProductListVM>();
 
 
