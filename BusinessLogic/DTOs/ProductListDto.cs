@@ -5,7 +5,7 @@ namespace BusinessLogic.DTOs;
 // Used when displaying the Products for the Clients (NOT ADMINS)
 public class ProductListDto
 {
-    public IEnumerable<ProductDto> Items { get; set; } = [];
+    public IEnumerable<ProductDto> Items { get; set; } = new List<ProductDto>();
     public int PageIndex { get; set; }
     public int TotalPages { get; set; }
     public string? SearchTerm { get; set; }

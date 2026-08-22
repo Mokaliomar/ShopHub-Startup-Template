@@ -4,7 +4,7 @@ namespace myshop.Web.ViewModels;
 
 public class ProductListVM
 {
-    public IEnumerable<ProductShopIndexVM> Items { get; set; } = [];
+    public IEnumerable<ProductShopIndexVM> Items { get; set; } = new List<ProductShopIndexVM>();
     public int PageIndex { get; set; }
     public int TotalPages { get; set; }
     public string? SearchTerm { get; set; }

@@ -1,3 +1,4 @@
+using System.Diagnostics.Eventing.Reader;
 using BusinessLogic.BL;
 using BusinessLogic.DTOs;
 using DataAccess.Models;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using myshop.Entities.ViewModels;
 using myshop.Web.ViewModels;
+using NuGet.Protocol.Core.Types;
 
 namespace myshop.Web.Controllers
 {
@@ -36,16 +38,21 @@ namespace myshop.Web.Controllers
                 Price = x.Price,
             }); */
             var productListDto = _productManagement.GetPaginatedProducts(searchTerm, sortingTerm, pageNumber, 8);
+            foreach (var productDto in productListDto.Items)
+            {
+                var productId = productDto.Id;
+                productDto.AverageRate = _reviewManagement.GetAvgProductReviewRate(productId);
+
+                productDto.ReviewsCount = _reviewManagement.GetProductReviewsCount(productId);
+            }
             var productListVM = productListDto.Adapt<ProductListVM>();
+
 
             return View(productListVM);
         }
 
         public async Task<IActionResult> Details(int? id)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user is null)
-                return RedirectToAction("Login", "Account");
 
             var theProduct = _productManagement.GetProductWithCategoryById(id);
             var product = new ProductShopIndexVM()
@@ -61,10 +68,12 @@ namespace myshop.Web.Controllers
                 ReviewsCount = _reviewManagement.GetProductReviewsCount(id),
                 Reviews = _reviewManagement.GetProductReviews(id).Select(r => new ReviewVM()
                 {
-                    UserId = user.Id,
+                    Id = r.Id,
+                    UserId = r.ApplicationUserId,
                     UserImg = "",
-                    UserName = user.Name,
+                    UserName = r.ApplicationUser.Name,
                     CreationDate = r.CreatedAt,
+                    TheReview = r.TheReview,
                     Rate = r.ProductRate
                 })
             };
@@ -78,9 +87,72 @@ namespace myshop.Web.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user is null)
                 return RedirectToAction("Login", "Account");
+
             review.ApplicationUserId = user.Id;
-            _reviewManagement.AddReview(review);
+
+            if (_reviewManagement.HasReview(review.ApplicationUserId, review.ProductId))
+            {
+                TempData["DuplicateReview"] = "Can't make more than one review !";
+                return RedirectToAction("Details", new { id = review.ProductId });
+            }
+
+            _reviewManagement.AddReview(review); // needs a check if the user tries to add another review
             return RedirectToAction("Details", new { id = review.ProductId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditReview(int reviewId)
+        {
+            var review = _reviewManagement.GetReviewById(reviewId);
+            var isAuthorized = await IsUserAuthorizedForReview(review);
+            if (!isAuthorized)
+            {
+                return Forbid();
+            }
+
+            var theReview = _reviewManagement.GetReviewById(reviewId);
+            return View(theReview);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditReview(Review review)
+        {
+            var isAuthorized = await IsUserAuthorizedForReview(review);
+            if (!isAuthorized)
+                return Forbid();
+
+            bool isEdited = _reviewManagement.EditReview(review);
+            if (isEdited)
+                return RedirectToAction("Details", new { id = review.ProductId });
+
+            return View(review);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveReview(int reviewId)
+        {
+            var review = _reviewManagement.GetReviewById(reviewId);
+            var isAuthorized = await IsUserAuthorizedForReview(review);
+            if (!isAuthorized)
+            {
+                return Forbid();
+            }
+
+            _reviewManagement.RemoveReview(reviewId);
+            return RedirectToAction("Details", new { id = review.ProductId });
+        }
+
+        private async Task<bool> IsUserAuthorizedForReview(Review? review)
+        {
+            if (review == null)
+                return false;
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return false;
+
+            // هل المستخدم الحالي هو صاحب المراجعة؟
+            return review.ApplicationUserId == user.Id;
         }
     }
 }

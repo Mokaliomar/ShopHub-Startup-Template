@@ -1,0 +1,105 @@
+﻿@model Review
+
+@{
+    ViewBag.PageTitle = "Edit Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    .edit-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        padding: 35px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        max-width: 650px;
+    }
+
+    .edit-title {
+        color: #1e3a8a;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f1f5fb;
+    }
+
+    .btn-save {
+        background-color: #1e40af;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 10px 22px;
+        border: none;
+        transition: 0.25s ease;
+    }
+
+    .btn-save:hover {
+        background-color: #1e3a8a;
+        color: white;
+    }
+
+    .btn-cancel {
+        border: 1px solid #a0aec0;
+        color: #4a5568;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 10px 22px;
+        background: transparent;
+    }
+
+    .btn-cancel:hover {
+        background-color: #f8fafc;
+        color: #1e3a8a;
+    }
+</style>
+
+<div class="container d-flex justify-content-center">
+    <div class="edit-card w-100">
+        <h3 class="edit-title">
+            <i class="fa-solid fa-pen-to-square me-2"></i> Edit Your Review
+        </h3>
+
+        <form asp-controller="Home" asp-action="EditReview" method="post">
+            <!-- حقول مخفية للحفاظ على المعرفات الأساسية -->
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ProductId" />
+            <input type="hidden" asp-for="ApplicationUserId" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="UpdatedAt" />
+
+            <!-- 1. تعديل التقييم بالنجوم -->
+            <div class="mb-3">
+                <label asp-for="ProductRate" class="form-label fw-semibold text-dark">Your Rating</label>
+                <select asp-for="ProductRate" class="form-select" required>
+                    <option value="5">⭐⭐⭐⭐⭐ (5 - Excellent)</option>
+                    <option value="4">⭐⭐⭐⭐ (4 - Very Good)</option>
+                    <option value="3">⭐⭐⭐ (3 - Average)</option>
+                    <option value="2">⭐⭐ (2 - Poor)</option>
+                    <option value="1">⭐ (1 - Terrible)</option>
+                </select>
+                <span asp-validation-for="ProductRate" class="text-danger small"></span>
+            </div>
+
+            <!-- 2. تعديل نص المراجعة -->
+            <div class="mb-4">
+                <label asp-for="TheReview" class="form-label fw-semibold text-dark">Your Feedback</label>
+                <textarea asp-for="TheReview" class="form-control" rows="4" placeholder="Update your experience..." required></textarea>
+                <span asp-validation-for="TheReview" class="text-danger small"></span>
+            </div>
+
+            <!-- أزرار الحفظ والإلغاء -->
+            <div class="d-flex justify-content-end gap-2">
+                <a asp-controller="Home" asp-action="Details" asp-route-id="@Model.ProductId" class="btn btn-cancel">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-save">
+                    <i class="fa-solid fa-check me-1"></i> Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

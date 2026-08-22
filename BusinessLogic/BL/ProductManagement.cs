@@ -5,6 +5,7 @@ using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Repositories.Interfaces;
 using Mapster;
+using Org.BouncyCastle.Asn1.Misc;
 
 namespace BusinessLogic.BL;
 
@@ -152,7 +153,7 @@ public class ProductManagement
             .Map(dest => dest.CategoryName, src => src.Category.Name);
         #endregion */
 
-        var products = query.ProjectToType<ProductDto>();
+        var products = query.ProjectToType<ProductDto>().ToList();
 
         var productListDto = new ProductListDto
         {

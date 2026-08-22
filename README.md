@@ -169,10 +169,16 @@ To test the application's different roles and functionalities, you will need to 
 
 ![View Product Details](./Docs/Screenshots/Product%20Details%20Screen.png)
 
+### Edit Review
+![Edit Review](./Docs/Screenshots/Edit%20Review.png)
+
 ### Customer Shopping Cart
 
 ![Customer Empty Shopping Cart](./Docs/Screenshots/Empty%20Shopping%20Cart%20Screen.png)
 ![Customer Shopping Cart](./Docs/Screenshots/Shopping%20Cart%20Screen.png)
+
+### My Orders Screen
+![My Orders Screen](./Docs/Screenshots/My%20Orders%20Screen.png)
 
 ### Checkout Screen
 ![Checkout Screen](./Docs/Screenshots/Checkout.png)

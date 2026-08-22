@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using DataAccess.Models;
 using DataAccess.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessLogic.BL;
 
@@ -19,6 +21,44 @@ public class ReviewManagement
         return _unitOfWork.ReviewRepository.GetProductReviews(productId);
     }
 
+    public float GetAvgProductReviewRate(int? productId)
+    {
+        if (productId is null)
+            return 0;
+
+        var reviews = _unitOfWork.ReviewRepository.GetProductReviews(productId);
+        
+        var reviewsCount = GetProductReviewsCount(productId);
+        if(reviewsCount == 0)
+            return 0;
+
+        var avgRate = reviews.Sum(review => review.ProductRate) / reviewsCount;
+        return avgRate;
+    }
+    public int GetProductReviewsCount(int? productId)
+    {
+        var reviewsCount = _unitOfWork.ReviewRepository.GetProductReviews(productId).Count();
+        return reviewsCount;
+    }
+
+    public Review GetCustomerReview(string? customerId)
+    {
+        /* var review = _unitOfWork.ReviewRepository.GetById(customerId);
+        return review; */
+        throw new NotImplementedException();
+    }
+
+    public Review GetReviewById(int reviewId)
+    {
+        return _unitOfWork.ReviewRepository.GetById(reviewId);
+    }
+
+    public bool HasReview(string userId, int productId)
+    {
+        return _unitOfWork.ReviewRepository
+                    .GetProductReviews(productId)
+                    .Any(review => review.ApplicationUserId == userId);
+    }
     public bool AddReview(Review review)
     {
         try
@@ -39,7 +79,6 @@ public class ReviewManagement
     {
         try
         {
-            
             _unitOfWork.ReviewRepository.Delete(reviewId);
             _unitOfWork.Save();
             return true;
@@ -55,6 +94,7 @@ public class ReviewManagement
     {
         try
         {
+            review.UpdatedAt = DateTime.UtcNow;
             _unitOfWork.ReviewRepository.Update(review);
             _unitOfWork.Save();
             return true;
@@ -66,18 +106,4 @@ public class ReviewManagement
         }
     }
 
-    public float GetAvgProductReviewRate(int? productId)
-    {
-        if(productId is null)
-            return 0;
-            
-        var reviews = _unitOfWork.ReviewRepository.GetProductReviews(productId);
-        var avgRate = reviews.Sum(review => review.ProductRate) / reviews.Count();
-        return avgRate;
-    }
-    public int GetProductReviewsCount(int? productId)
-    {
-        var reviewsCount = _unitOfWork.ReviewRepository.GetProductReviews(productId).Count();
-        return reviewsCount;
-    }
 }
